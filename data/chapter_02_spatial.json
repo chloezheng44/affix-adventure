@@ -1,0 +1,343 @@
+{
+  "chapterId": "chap_spatial",
+  "levels": [
+    {
+      "prefix": "pro-",
+      "meaning": "向前 (forward)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "推动矿车向前冲！",
+      "words": [
+        {
+          "word": "progress",
+          "root": "gress",
+          "cn": "进步；前进",
+          "difficulty": 1
+        },
+        {
+          "word": "promote",
+          "root": "mote",
+          "cn": "促进；提升",
+          "difficulty": 1
+        },
+        {
+          "word": "project",
+          "root": "ject",
+          "cn": "项目；投射",
+          "difficulty": 2
+        },
+        {
+          "word": "protect",
+          "root": "tect",
+          "cn": "保护",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "with-",
+      "meaning": "向后/相反 (back)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "抵御陷阱向后撤退！",
+      "words": [
+        {
+          "word": "withdraw",
+          "root": "draw",
+          "cn": "撤退；取回",
+          "difficulty": 2
+        },
+        {
+          "word": "withhold",
+          "root": "hold",
+          "cn": "保留；扣留",
+          "difficulty": 2
+        },
+        {
+          "word": "withstand",
+          "root": "stand",
+          "cn": "承受住；抵抗",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "intro-",
+      "meaning": "向内 (inward)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "推开密室的门走进去！",
+      "words": [
+        {
+          "word": "introduce",
+          "root": "duce",
+          "cn": "介绍；引入",
+          "difficulty": 1
+        },
+        {
+          "word": "introvert",
+          "root": "vert",
+          "cn": "内向的人",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "inter-",
+      "meaning": "之间 (between)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "在两座悬崖之间架起绳桥！",
+      "words": [
+        {
+          "word": "interact",
+          "root": "act",
+          "cn": "互动；交流",
+          "difficulty": 1
+        },
+        {
+          "word": "international",
+          "root": "national",
+          "cn": "国际的",
+          "difficulty": 1
+        },
+        {
+          "word": "interrupt",
+          "root": "rupt",
+          "cn": "打断；插嘴",
+          "difficulty": 2
+        },
+        {
+          "word": "internet",
+          "root": "net",
+          "cn": "互联网",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "trans-",
+      "meaning": "穿过/越过 (across)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "穿越闪光的传送门！",
+      "words": [
+        {
+          "word": "transport",
+          "root": "port",
+          "cn": "运输",
+          "difficulty": 1
+        },
+        {
+          "word": "translate",
+          "root": "late",
+          "cn": "翻译",
+          "difficulty": 1
+        },
+        {
+          "word": "transfer",
+          "root": "fer",
+          "cn": "转移；转乘",
+          "difficulty": 2
+        },
+        {
+          "word": "transform",
+          "root": "form",
+          "cn": "使变形；改造",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "sur-",
+      "meaning": "在上 (over)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "攀上高耸的城墙表面！",
+      "words": [
+        {
+          "word": "surface",
+          "root": "face",
+          "cn": "表面",
+          "difficulty": 1
+        },
+        {
+          "word": "surpass",
+          "root": "pass",
+          "cn": "超越；胜过",
+          "difficulty": 2
+        },
+        {
+          "word": "survive",
+          "root": "vive",
+          "cn": "幸存；活下来",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "over-",
+      "meaning": "在上/过度 (above/too much)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "张开翅膀飞越障碍物！",
+      "words": [
+        {
+          "word": "overcome",
+          "root": "come",
+          "cn": "克服",
+          "difficulty": 1
+        },
+        {
+          "word": "overlook",
+          "root": "look",
+          "cn": "俯视；忽略",
+          "difficulty": 2
+        },
+        {
+          "word": "overseas",
+          "root": "seas",
+          "cn": "海外的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "out-",
+      "meaning": "向外/超越 (outside)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "冲出迷宫的出口！",
+      "words": [
+        {
+          "word": "outcome",
+          "root": "come",
+          "cn": "结果；结局",
+          "difficulty": 1
+        },
+        {
+          "word": "outstanding",
+          "root": "standing",
+          "cn": "杰出的",
+          "difficulty": 2
+        },
+        {
+          "word": "outside",
+          "root": "side",
+          "cn": "外面；外部",
+          "difficulty": 1
+        },
+        {
+          "word": "output",
+          "root": "put",
+          "cn": "输出；产量",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "sub-",
+      "meaning": "在下 (under)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "深吸一口气潜入地下河！",
+      "words": [
+        {
+          "word": "subway",
+          "root": "way",
+          "cn": "地铁",
+          "difficulty": 1
+        },
+        {
+          "word": "submarine",
+          "root": "marine",
+          "cn": "潜水艇",
+          "difficulty": 1
+        },
+        {
+          "word": "subtitle",
+          "root": "title",
+          "cn": "字幕",
+          "difficulty": 2
+        },
+        {
+          "word": "subtract",
+          "root": "tract",
+          "cn": "减去",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "under-",
+      "meaning": "在下方/不足 (below)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "挖一条地下通道！",
+      "words": [
+        {
+          "word": "understand",
+          "root": "stand",
+          "cn": "理解",
+          "difficulty": 1
+        },
+        {
+          "word": "underground",
+          "root": "ground",
+          "cn": "地下的",
+          "difficulty": 1
+        },
+        {
+          "word": "underestimate",
+          "root": "estimate",
+          "cn": "低估",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "ex-",
+      "meaning": "向外/出去 (out)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "寻找发光的出口！",
+      "words": [
+        {
+          "word": "exit",
+          "root": "it",
+          "cn": "出口",
+          "difficulty": 1
+        },
+        {
+          "word": "export",
+          "root": "port",
+          "cn": "出口；输出",
+          "difficulty": 1
+        },
+        {
+          "word": "express",
+          "root": "press",
+          "cn": "表达",
+          "difficulty": 1
+        },
+        {
+          "word": "explore",
+          "root": "plore",
+          "cn": "探索",
+          "difficulty": 2
+        }
+      ]
+    }
+  ]
+}

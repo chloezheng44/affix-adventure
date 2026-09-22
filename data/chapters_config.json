@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "generatedFrom": "data/wordbank.csv",
+  "generatedAt": "2026-09-22T04:56:32.790Z",
+  "chapters": [
+    {
+      "id": "chap_neg",
+      "title": "幻境与反击",
+      "theme": "negative",
+      "themeName": "否定类",
+      "story": "镜中世界布满幻象！掌握否定前缀的力量才能识破幻术/净化污染/反弹攻击",
+      "dataFile": "data/chapter_01_negative.json",
+      "unlockRequirement": 0,
+      "clearAchievement": {
+        "ico": "🪞",
+        "title": "幻境克星"
+      }
+    },
+    {
+      "id": "chap_spatial",
+      "title": "地下城与天空塔",
+      "theme": "spatial",
+      "themeName": "空间位置类",
+      "story": "在地下城与天空塔之间穿梭！掌握11个空间位置前缀的魔力",
+      "dataFile": "data/chapter_02_spatial.json",
+      "unlockRequirement": "chap_neg",
+      "clearAchievement": {
+        "ico": "🗺️",
+        "title": "空间大师"
+      }
+    },
+    {
+      "id": "chap_number",
+      "title": "数字王国",
+      "theme": "number",
+      "themeName": "数字类",
+      "story": "在数字王国你会遇到只认数字的奇怪生物！",
+      "dataFile": "data/chapter_03_number.json",
+      "unlockRequirement": "chap_spatial",
+      "clearAchievement": {
+        "ico": "🔢",
+        "title": "数字先锋"
+      }
+    }
+  ]
+}

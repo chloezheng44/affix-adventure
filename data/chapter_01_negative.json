@@ -1,0 +1,355 @@
+{
+  "chapterId": "chap_neg",
+  "levels": [
+    {
+      "prefix": "anti-",
+      "meaning": "反对/对抗 (against)",
+      "school": "🛡️反击派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "举起盾牌反弹敌人的特殊攻击！",
+      "words": [
+        {
+          "word": "antibody",
+          "root": "body",
+          "cn": "抗体",
+          "difficulty": 1
+        },
+        {
+          "word": "antivirus",
+          "root": "virus",
+          "cn": "杀毒软件",
+          "difficulty": 1
+        },
+        {
+          "word": "antisocial",
+          "root": "social",
+          "cn": "反社会的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "counter-",
+      "meaning": "相反/反击 (in return)",
+      "school": "🛡️反击派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "看穿敌方动作发动反向打击！",
+      "words": [
+        {
+          "word": "counterattack",
+          "root": "attack",
+          "cn": "反击",
+          "difficulty": 2
+        },
+        {
+          "word": "counterclockwise",
+          "root": "clockwise",
+          "cn": "逆时针的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "contra-",
+      "meaning": "相反 (opposite)",
+      "school": "🛡️反击派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "在镜像迷宫中反驳幻象的谎言！",
+      "words": [
+        {
+          "word": "contradict",
+          "root": "dict",
+          "cn": "反驳",
+          "difficulty": 2
+        },
+        {
+          "word": "contrast",
+          "root": "st",
+          "cn": "对比；对照",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "dis-",
+      "meaning": "不/取消 (not/undo)",
+      "school": "🔮破除派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "挥动魔杖解除魔法封印！",
+      "words": [
+        {
+          "word": "disagree",
+          "root": "agree",
+          "cn": "不同意",
+          "difficulty": 1
+        },
+        {
+          "word": "disappear",
+          "root": "appear",
+          "cn": "消失",
+          "difficulty": 1
+        },
+        {
+          "word": "discover",
+          "root": "cover",
+          "cn": "发现",
+          "difficulty": 1
+        },
+        {
+          "word": "dishonest",
+          "root": "honest",
+          "cn": "不诚实的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "un-",
+      "meaning": "不/相反 (not/reverse)",
+      "school": "🔮破除派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "揭开幻象的面具还原真相！",
+      "words": [
+        {
+          "word": "unhappy",
+          "root": "happy",
+          "cn": "不快乐的",
+          "difficulty": 1
+        },
+        {
+          "word": "unlock",
+          "root": "lock",
+          "cn": "解锁",
+          "difficulty": 1
+        },
+        {
+          "word": "unlucky",
+          "root": "lucky",
+          "cn": "不走运的",
+          "difficulty": 1
+        },
+        {
+          "word": "uncover",
+          "root": "cover",
+          "cn": "揭开",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "non-",
+      "meaning": "非/不 (not)",
+      "school": "🔮破除派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "撕碎伪装的假告示牌！",
+      "words": [
+        {
+          "word": "nonsense",
+          "root": "sense",
+          "cn": "废话",
+          "difficulty": 1
+        },
+        {
+          "word": "nonstop",
+          "root": "stop",
+          "cn": "不停的",
+          "difficulty": 1
+        },
+        {
+          "word": "nonfiction",
+          "root": "fiction",
+          "cn": "纪实文学",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "mal-",
+      "meaning": "坏的/错误 (bad)",
+      "school": "💧净化派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "净化被污染的泉水！",
+      "words": [
+        {
+          "word": "malware",
+          "root": "ware",
+          "cn": "恶意软件",
+          "difficulty": 1
+        },
+        {
+          "word": "malfunction",
+          "root": "function",
+          "cn": "故障",
+          "difficulty": 1
+        },
+        {
+          "word": "malnutrition",
+          "root": "nutrition",
+          "cn": "营养不良",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "mis-",
+      "meaning": "错误地 (wrongly)",
+      "school": "💧净化派",
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "修正被破坏的古老机关！",
+      "words": [
+        {
+          "word": "misunderstand",
+          "root": "understand",
+          "cn": "误解",
+          "difficulty": 1
+        },
+        {
+          "word": "misspell",
+          "root": "spell",
+          "cn": "拼错",
+          "difficulty": 1
+        },
+        {
+          "word": "mislead",
+          "root": "lead",
+          "cn": "误导",
+          "difficulty": 1
+        },
+        {
+          "word": "mistake",
+          "root": "take",
+          "cn": "错误",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "in-",
+      "meaning": "不/无 (not)",
+      "school": "👁️识破派",
+      "rule": "词根开头不是l/r也不是p/b/m时用in-",
+      "assimilationGroup": [
+        "in-",
+        "im-",
+        "il-",
+        "ir-"
+      ],
+      "scene": "变形怪来袭！选出读音匹配的前缀！",
+      "words": [
+        {
+          "word": "invisible",
+          "root": "visible",
+          "cn": "隐形的",
+          "difficulty": 1
+        },
+        {
+          "word": "incorrect",
+          "root": "correct",
+          "cn": "不正确的",
+          "difficulty": 1
+        },
+        {
+          "word": "incomplete",
+          "root": "complete",
+          "cn": "不完整的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "im-",
+      "meaning": "不/无 (not)",
+      "school": "👁️识破派",
+      "rule": "词根以p/b/m开头时in-同化为im-",
+      "assimilationGroup": [
+        "in-",
+        "im-",
+        "il-",
+        "ir-"
+      ],
+      "scene": "变形怪来袭！选出读音匹配的前缀！",
+      "words": [
+        {
+          "word": "impossible",
+          "root": "possible",
+          "cn": "不可能的",
+          "difficulty": 1
+        },
+        {
+          "word": "impolite",
+          "root": "polite",
+          "cn": "不礼貌的",
+          "difficulty": 1
+        },
+        {
+          "word": "impatient",
+          "root": "patient",
+          "cn": "不耐烦的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "il-",
+      "meaning": "不/无 (not)",
+      "school": "👁️识破派",
+      "rule": "词根以l开头时in-同化为il-",
+      "assimilationGroup": [
+        "in-",
+        "im-",
+        "il-",
+        "ir-"
+      ],
+      "scene": "变形怪来袭！选出读音匹配的前缀！",
+      "words": [
+        {
+          "word": "illegal",
+          "root": "legal",
+          "cn": "非法的",
+          "difficulty": 1
+        },
+        {
+          "word": "illogical",
+          "root": "logical",
+          "cn": "不合逻辑的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "ir-",
+      "meaning": "不/无 (not)",
+      "school": "👁️识破派",
+      "rule": "词根以r开头时in-同化为ir-",
+      "assimilationGroup": [
+        "in-",
+        "im-",
+        "il-",
+        "ir-"
+      ],
+      "scene": "变形怪来袭！选出读音匹配的前缀！",
+      "words": [
+        {
+          "word": "irregular",
+          "root": "regular",
+          "cn": "不规则的",
+          "difficulty": 1
+        },
+        {
+          "word": "irresponsible",
+          "root": "responsible",
+          "cn": "不负责任的",
+          "difficulty": 2
+        }
+      ]
+    }
+  ]
+}

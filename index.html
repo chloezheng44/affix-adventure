@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>词缀大冒险 · Affix Adventure</title>
+<style>
+:root{
+  --bg:#1a1440; --bg2:#241b5e; --panel:#2e2470; --panel2:#3a2e8c;
+  --gold:#ffd166; --gold2:#ffb347; --ink:#fff;
+  --green:#4ade80; --red:#f87171; --blue:#60a5fa; --purple:#c084fc;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  background:radial-gradient(1200px 700px at 50% -10%,#3a2e8c 0%,var(--bg) 60%);
+  color:var(--ink);overflow:hidden;user-select:none;-webkit-user-select:none;
+}
+#app{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{
+  position:relative;width:100%;height:100%;max-width:520px;max-height:100%;
+  background:linear-gradient(180deg,#241b5e 0%,#1a1440 55%,#140f33 100%);
+  overflow:hidden;box-shadow:var(--shadow);
+}
+@media(min-width:560px){
+  #stage{border-radius:20px;height:min(92vh,900px);margin:12px}
+}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.active{display:flex;animation:screenIn .35s ease}
+@keyframes screenIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ============ 通用组件 ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:none;cursor:pointer;font-weight:800;color:#3a2500;
+  background:linear-gradient(180deg,var(--gold) 0%,var(--gold2) 100%);
+  border-radius:999px;padding:14px 30px;font-size:17px;
+  box-shadow:0 5px 0 #b97a16,0 10px 20px rgba(0,0,0,.3);
+  transition:transform .08s ease,box-shadow .08s ease;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #b97a16}
+.btn.ghost{background:transparent;color:#cfc6ff;border:2px solid #6a5ab8;box-shadow:none;padding:12px 26px}
+.btn.ghost:active{transform:translateY(2px)}
+.icon-btn{
+  width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;
+  background:rgba(255,255,255,.12);color:#fff;font-size:19px;display:flex;align-items:center;justify-content:center;
+}
+.icon-btn:active{transform:scale(.92)}
+.tag{display:inline-block;background:rgba(255,255,255,.14);border-radius:999px;padding:4px 12px;font-size:12px;color:#d8d2ff}
+
+/* toast */
+#toast-wrap{position:absolute;top:14px;left:0;right:0;z-index:200;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{
+  background:linear-gradient(90deg,#6d28d9,#4f46e5);border:1px solid rgba(255,255,255,.25);
+  padding:10px 20px;border-radius:999px;font-size:14px;font-weight:700;box-shadow:var(--shadow);
+  animation:toastIn .3s ease;display:flex;gap:8px;align-items:center;max-width:88%;
+}
+@keyframes toastIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+.toast.out{animation:toastOut .3s ease forwards}
+@keyframes toastOut{to{opacity:0;transform:translateY(-14px)}}
+
+/* 加载页 */
+#screen-loading{align-items:center;justify-content:center;gap:18px}
+.spinner{width:46px;height:46px;border-radius:50%;border:4px solid rgba(255,255,255,.15);border-top-color:#ffd166;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#load-error{color:#f87171;font-size:13px;max-width:80%;text-align:center;line-height:1.9;display:none}
+
+/* ============ 首页 ============ */
+#screen-home{align-items:center;justify-content:center;gap:22px;padding:24px}
+#home-stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.star-dot{position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;opacity:.6;animation:twinkle 3s infinite}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.8}}
+.float-affix{position:absolute;font-weight:900;font-size:20px;color:rgba(255,255,255,.13);animation:floatUp linear infinite;pointer-events:none;font-style:italic}
+@keyframes floatUp{from{transform:translateY(110%)}to{transform:translateY(-30%)}}
+#logo{text-align:center;position:relative;z-index:2}
+#logo .en{font-size:14px;letter-spacing:6px;color:#9d94e8;font-weight:700;margin-bottom:6px}
+#logo h1{
+  font-size:44px;font-weight:900;
+  background:linear-gradient(180deg,#ffe9a8,#ffd166 55%,#f59e0b);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 6px 24px rgba(255,209,102,.25);letter-spacing:2px;
+}
+#logo .sub{margin-top:10px;color:#c9c2ff;font-size:13px}
+#logo .mascot{font-size:64px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.4));animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+#home-menu{display:flex;flex-direction:column;gap:14px;position:relative;z-index:2;width:min(78%,280px)}
+#home-foot{color:#8d84cf;font-size:12px;position:relative;z-index:2;text-align:center;line-height:1.8}
+
+/* ============ 地图页 ============ */
+.top-bar{display:flex;align-items:center;gap:12px;padding:14px 16px;z-index:5;background:linear-gradient(180deg,rgba(10,7,30,.55),transparent)}
+.top-bar .title{font-weight:900;font-size:18px;flex:1}
+.chapter-tabs{display:flex;gap:8px;padding:0 16px 10px;overflow-x:auto}
+.chapter-tab{
+  flex-shrink:0;padding:10px 18px;border-radius:14px;cursor:pointer;font-weight:800;font-size:14px;
+  background:rgba(255,255,255,.08);border:2px solid transparent;color:#b9b1ee;transition:.2s;white-space:nowrap;
+}
+.chapter-tab.on{background:linear-gradient(180deg,#7c3aed,#5b21b6);color:#fff;border-color:#a78bfa;box-shadow:0 4px 16px rgba(124,58,237,.4)}
+.chapter-tab.lock{opacity:.45}
+.map-body{flex:1;overflow-y:auto;padding:8px 18px 30px;position:relative}
+.chapter-banner{text-align:center;margin:6px 0 18px}
+.chapter-banner .name{font-size:22px;font-weight:900;color:#ffd166}
+.chapter-banner .desc{font-size:12px;color:#b7aef0;margin-top:4px}
+.level-path{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;padding:0 18px}
+.level-node{
+  position:relative;width:76px;height:76px;border-radius:50%;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:linear-gradient(180deg,#4c3fae,#372c80);border:3px solid #6a5ab8;
+  box-shadow:0 6px 16px rgba(0,0,0,.35);transition:transform .12s;
+}
+.level-node:nth-child(odd){transform:translateX(-58px)}
+.level-node:nth-child(even){transform:translateX(58px)}
+.level-node:active{transform:scale(.93)}
+.level-node .pfx{font-weight:900;font-size:15px;font-style:italic}
+.level-node .stars{font-size:11px;color:#ffd166;letter-spacing:-1px}
+.level-node.locked{filter:grayscale(1) brightness(.55);cursor:not-allowed}
+.level-node.cleared{background:linear-gradient(180deg,#2f9e5f,#1c7a44);border-color:#4ade80}
+.level-node .num{position:absolute;top:-4px;right:-4px;background:#ffd166;color:#4a3000;font-size:11px;font-weight:900;border-radius:999px;padding:2px 7px}
+.level-connector{width:4px;height:26px;background:repeating-linear-gradient(180deg,#6a5ab8 0 8px,transparent 8px 14px);border-radius:2px}
+.coming-soon{margin-top:26px;text-align:center;padding:22px;border-radius:16px;border:2px dashed #5a4ba8;color:#9d94e8;font-size:13px;line-height:1.9}
+
+/* ============ 游戏页 ============ */
+#screen-game{background:linear-gradient(180deg,#1c2a5e 0%,#241b5e 45%,#170f38 100%)}
+.game-top{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.game-top .level-name{flex:1;text-align:center;font-weight:800;font-size:14px;line-height:1.4}
+.game-top .hearts{display:flex;gap:3px;font-size:16px}
+.game-top .hearts .lost{opacity:.22;filter:grayscale(1)}
+.game-top .score-chip{font-weight:900;color:#ffd166;font-size:15px;min-width:58px;text-align:right}
+.scene{position:relative;height:220px;margin:2px 16px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#16204d,#1b1440);border:2px solid rgba(255,255,255,.08)}
+.scene .deco{position:absolute;inset:0;opacity:.5}
+.monster-wrap{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);transition:.3s}
+.monster{position:relative;width:120px;height:110px;animation:bob 2.4s ease-in-out infinite}
+.monster svg{width:100%;height:100%;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))}
+.monster .eyes{position:absolute;top:38px;left:0;right:0;display:flex;justify-content:center;gap:26px}
+.monster .eye{width:16px;height:20px;background:#fff;border-radius:50%;position:relative;animation:blink 4s infinite}
+.monster .eye::after{content:"";position:absolute;left:4px;top:6px;width:8px;height:10px;background:#1a1440;border-radius:50%}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.monster.dead{animation:monsterDie .6s ease forwards}
+@keyframes monsterDie{40%{transform:scale(1.25) rotate(-6deg)}100%{transform:scale(0) rotate(20deg);opacity:0}}
+.speech{
+  position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  background:#fff;color:#241b5e;font-weight:700;font-size:14px;
+  padding:9px 16px;border-radius:14px;max-width:86%;text-align:center;
+  animation:speechIn .4s ease;box-shadow:0 6px 18px rgba(0,0,0,.35);line-height:1.5;
+}
+.speech::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fff;border-bottom:0}
+@keyframes speechIn{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+.speech .kw{color:#c2410c;font-weight:900}
+.rule-badge{display:inline-block;margin-top:6px;background:rgba(194,65,12,.1);border:1px solid #c2410c;color:#c2410c;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:800}
+.progress-dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px}
+.progress-dots .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18)}
+.progress-dots .dot.done{background:#4ade80}
+.progress-dots .dot.cur{background:#ffd166;transform:scale(1.25)}
+.combine-zone{display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 18px 4px}
+.prefix-slot{
+  min-width:130px;height:76px;border-radius:16px;border:3px dashed #8b7ff0;
+  background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#9d94e8;font-weight:700;transition:.15s;
+}
+.prefix-slot.hot{border-color:#ffd166;background:rgba(255,209,102,.12);transform:scale(1.06)}
+.plus{font-size:30px;font-weight:900;color:#8b7ff0}
+.root-card{
+  min-width:130px;height:76px;border-radius:16px;padding:6px 14px;
+  background:linear-gradient(180deg,#3b82f6,#1d4ed8);border:3px solid #93c5fd;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(37,99,235,.4);animation:dropIn .5s cubic-bezier(.2,1.4,.4,1);
+}
+.root-card .r{font-size:26px;font-weight:900;font-style:italic;letter-spacing:1px}
+.root-card .hint{font-size:10px;color:#bfdbfe;opacity:.85}
+@keyframes dropIn{from{transform:translateY(-70px);opacity:0}to{transform:none;opacity:1}}
+.word-flash{
+  position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.4);
+  font-size:34px;font-weight:900;color:#4ade80;opacity:0;pointer-events:none;z-index:50;
+  text-align:center;text-shadow:0 4px 20px rgba(74,222,128,.5);white-space:nowrap;
+}
+.word-flash.show{animation:flashWord 1.1s ease forwards}
+@keyframes flashWord{15%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-70px) scale(.9)}}
+.word-flash .cn{display:block;font-size:15px;color:#fff;font-weight:700}
+.options-zone{flex:1;display:flex;align-items:center;justify-content:center;padding:6px 14px 18px}
+.options{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.pfx-tile{
+  touch-action:none;cursor:grab;min-width:96px;padding:14px 16px;border-radius:16px;
+  background:linear-gradient(180deg,#7c3aed,#5b21b6);border:2px solid #a78bfa;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  box-shadow:0 5px 0 #43189d,0 8px 18px rgba(0,0,0,.35);transition:transform .1s;
+}
+.pfx-tile.assim{background:linear-gradient(180deg,#0e7490,#155e75);border-color:#67e8f9;box-shadow:0 5px 0 #0c4a5e,0 8px 18px rgba(0,0,0,.35)}
+.pfx-tile .p{font-size:19px;font-weight:900;font-style:italic}
+.pfx-tile .m{font-size:10px;color:#ddd0ff}
+.pfx-tile.assim .m{color:#cffafe}
+.pfx-tile:active{transform:scale(.95)}
+.pfx-tile.used{opacity:.25;pointer-events:none}
+.pfx-tile.shake{animation:shake .4s}
+.pfx-tile.glow{animation:tileGlow .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes tileGlow{50%{transform:scale(1.12);box-shadow:0 0 24px #4ade80}}
+#drag-ghost{position:fixed;z-index:300;pointer-events:none;transform:translate(-50%,-50%) scale(1.05) rotate(-3deg);opacity:.92;display:none}
+/* 匹配阶段 */
+.match-zone-wrap{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.match-zone{flex:1;display:flex;flex-direction:column;padding:4px 16px 16px;overflow:hidden;min-height:0}
+.match-title{text-align:center;font-weight:800;font-size:15px;padding:8px 0 4px;color:#ffd166}
+.match-cols{flex:1;display:flex;gap:12px;position:relative}
+.match-col{flex:1;display:flex;flex-direction:column;gap:10px;justify-content:space-around}
+.match-item{
+  background:rgba(255,255,255,.08);border:2px solid #6a5ab8;border-radius:14px;
+  padding:12px 8px;text-align:center;font-weight:800;cursor:pointer;font-size:16px;transition:.15s;position:relative;
+}
+.match-item.meaning{font-size:13px;line-height:1.45;font-weight:600}
+.match-item.sel{border-color:#ffd166;background:rgba(255,209,102,.15);transform:scale(1.04)}
+.match-item.ok{border-color:#4ade80;background:rgba(74,222,128,.14);pointer-events:none}
+.match-item.ok::after{content:"✓";position:absolute;top:-8px;right:-6px;background:#4ade80;color:#052e16;font-size:11px;font-weight:900;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.match-item.err{animation:shake .4s;border-color:#f87171}
+#match-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+
+/* ============ 弹窗 ============ */
+.modal-mask{position:absolute;inset:0;background:rgba(8,5,25,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:22px}
+.modal-mask.show{display:flex;animation:screenIn .3s ease}
+.modal{
+  width:100%;max-width:360px;background:linear-gradient(180deg,#332778,#251c56);
+  border:2px solid rgba(255,255,255,.15);border-radius:22px;padding:26px 22px;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);max-height:88%;overflow-y:auto;
+}
+.modal h2{font-size:24px;margin-bottom:6px}
+.modal .stars-row{font-size:42px;letter-spacing:6px;margin:10px 0}
+.modal .stars-row .dim{opacity:.2}
+.modal .score-line{color:#ffd166;font-weight:900;font-size:18px;margin-bottom:6px}
+.modal .detail{color:#c6bdf3;font-size:13px;line-height:1.7;margin:8px 0 14px}
+.card-unlock{
+  margin:12px auto;padding:14px;border-radius:16px;width:220px;position:relative;
+  background:linear-gradient(150deg,#7c3aed,#4f46e5 60%,#7c3aed);
+  border:2px solid #ffd166;animation:cardPop .6s cubic-bezier(.2,1.5,.4,1);
+  box-shadow:0 0 30px rgba(255,209,102,.35);
+}
+@keyframes cardPop{from{transform:rotateY(90deg) scale(.6)}to{transform:none}}
+.card-unlock .cu-label{font-size:10px;color:#ffe9a8;letter-spacing:2px}
+.card-unlock .cu-pfx{font-size:28px;font-weight:900;font-style:italic;margin:2px 0}
+.card-unlock .cu-mean{font-size:12px;color:#e3d9ff}
+.modal .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+
+/* ============ 图鉴 ============ */
+.dict-body{flex:1;overflow-y:auto;padding:10px 16px 30px}
+.dict-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dict-card{border-radius:16px;padding:14px;position:relative;overflow:hidden;min-height:150px;background:linear-gradient(150deg,#7c3aed,#5b21b6);border:2px solid #a78bfa}
+.dict-card.locked{background:#241d52;border:2px dashed #4a3f8f;color:#6a5fb8;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.dict-card.locked .lock{font-size:30px}
+.dict-card .dc-pfx{font-size:22px;font-weight:900;font-style:italic}
+.dict-card .dc-mean{font-size:12px;color:#ddd0ff;margin:2px 0 6px}
+.dict-card .dc-school{display:inline-block;font-size:11px;background:rgba(255,255,255,.14);border-radius:99px;padding:2px 10px;margin-bottom:6px}
+.dict-card .dc-rule{font-size:11px;color:#ffe9a8;margin-bottom:6px;line-height:1.5}
+.dict-card .dc-scene{font-size:11px;color:#ffe9a8;margin-bottom:6px}
+.dict-card .dc-words{font-size:11px;line-height:1.7;color:#e9e3ff}
+.dict-card .dc-words b{color:#fff}
+.dict-card .dc-chip{position:absolute;top:10px;right:10px;font-size:10px;background:rgba(255,255,255,.15);padding:2px 8px;border-radius:99px}
+
+/* ============ 成就 ============ */
+.achv-body{flex:1;overflow-y:auto;padding:10px 16px 30px;display:flex;flex-direction:column;gap:10px}
+.achv-item{display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.06);border:2px solid #453a8c;border-radius:16px;padding:14px}
+.achv-item.got{border-color:#ffd166;background:rgba(255,209,102,.08)}
+.achv-item .ico{font-size:30px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border-radius:12px;flex-shrink:0}
+.achv-item.got .ico{background:linear-gradient(180deg,#ffd166,#f59e0b)}
+.achv-item .t{font-weight:800;font-size:15px}
+.achv-item .d{font-size:12px;color:#b3a9e8;margin-top:2px;line-height:1.5}
+.achv-item .st{margin-left:auto;font-size:11px;color:#8d84cf;flex-shrink:0}
+.achv-item.got .st{color:#ffd166;font-weight:800}
+
+/* 错题本 */
+.wrong-body{flex:1;overflow-y:auto;padding:10px 16px 30px}
+.wrong-item{background:rgba(255,255,255,.06);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.wrong-item .w{font-weight:900;font-size:17px}
+.wrong-item .w span{font-size:12px;color:#b3a9e8;font-weight:600;margin-left:8px;font-style:normal}
+.wrong-item .fix{font-size:11px;color:#ffd166;text-align:right}
+
+/* help */
+.help-box{font-size:13px;color:#d8d2ff;line-height:1.9;text-align:left}
+.help-box b{color:#ffd166}
+.help-box .step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
+.help-box .step .n{background:#ffd166;color:#4a3000;font-weight:900;border-radius:8px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="stage">
+
+  <!-- ====== 加载页 (数据驱动: 引擎启动时读取外部词库) ====== -->
+  <div class="screen active" id="screen-loading">
+    <div class="spinner"></div>
+    <div style="font-weight:800">正在加载词库数据…</div>
+    <div id="load-error">
+      ⚠️ 词库数据加载失败。<br>
+      方案一：运行 <b>node tools/data-tools.mjs bundle</b> 生成离线数据包 data/bundle.js 后重新打开；<br>
+      方案二：通过本地 HTTP 服务打开（如 <b>npx serve</b> 或 <b>python -m http.server</b>）。
+    </div>
+  </div>
+
+  <!-- ====== 首页 ====== -->
+  <div class="screen" id="screen-home">
+    <div id="home-stars"></div>
+    <div id="logo">
+      <div class="en">AFFIX ADVENTURE</div>
+      <div class="mascot">🧙‍♂️</div>
+      <h1>词缀大冒险</h1>
+      <div class="sub">拆解单词的基因密码 · 前缀 × 词根 = 无限词汇</div>
+    </div>
+    <div id="home-menu">
+      <button class="btn" onclick="UI.goMap()">⚔️ 开始冒险</button>
+      <button class="btn ghost" onclick="UI.goDict()">📖 词缀图鉴</button>
+      <button class="btn ghost" onclick="UI.goAchv()">🏆 成就殿堂</button>
+      <button class="btn ghost" onclick="UI.goWrong()">📝 错题本</button>
+    </div>
+    <div id="home-foot">长期坚持产生的复利能够改变人生</div>
+  </div>
+
+  <!-- ====== 地图 ====== -->
+  <div class="screen" id="screen-map">
+    <div class="top-bar">
+      <button class="icon-btn" onclick="UI.goHome()">🏠</button>
+      <div class="title">冒险地图</div>
+      <button class="icon-btn" onclick="UI.goHelp()">❓</button>
+    </div>
+    <div class="chapter-tabs" id="chapter-tabs"></div>
+    <div class="map-body">
+      <div class="chapter-banner" id="chapter-banner"></div>
+      <div class="level-path" id="level-path"></div>
+      <div class="coming-soon">🔮 更多章节筹备中<br>词库 JSON 即插即用 · 无需改动游戏代码</div>
+    </div>
+  </div>
+
+  <!-- ====== 游戏 ====== -->
+  <div class="screen" id="screen-game">
+    <div class="game-top">
+      <button class="icon-btn" onclick="Game.quit()">🏠</button>
+      <div class="level-name" id="g-level-name"></div>
+      <div class="hearts" id="g-hearts"></div>
+      <div class="score-chip" id="g-score">0</div>
+    </div>
+    <div class="scene" id="g-scene">
+      <div class="deco" id="g-deco"></div>
+      <div class="speech" id="g-speech"></div>
+      <div class="monster-wrap" id="g-monster-wrap"><div class="monster" id="g-monster"></div></div>
+      <div class="word-flash" id="g-flash"></div>
+    </div>
+    <div class="progress-dots" id="g-dots"></div>
+    <div id="g-combine" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+      <div class="combine-zone">
+        <div class="prefix-slot" id="g-slot">把前缀拖到这里</div>
+        <div class="plus">+</div>
+        <div class="root-card" id="g-root"></div>
+      </div>
+      <div class="options-zone"><div class="options" id="g-options"></div></div>
+    </div>
+    <div id="g-match" style="display:none" class="match-zone-wrap">
+      <div class="match-zone">
+        <div class="match-title">🌟 最后挑战：把单词和词义连起来！</div>
+        <div class="match-cols" id="g-match-cols">
+          <svg id="match-svg"></svg>
+          <div class="match-col" id="mc-left"></div>
+          <div class="match-col" id="mc-right"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 图鉴 ====== -->
+  <div class="screen" id="screen-dict">
+    <div class="top-bar">
+      <button class="icon-btn" onclick="UI.goHome()">🏠</button>
+      <div class="title">词缀图鉴</div>
+      <div class="tag" id="dict-count"></div>
+    </div>
+    <div class="dict-body"><div class="dict-grid" id="dict-grid"></div></div>
+  </div>
+
+  <!-- ====== 成就 ====== -->
+  <div class="screen" id="screen-achv">
+    <div class="top-bar">
+      <button class="icon-btn" onclick="UI.goHome()">🏠</button>
+      <div class="title">成就殿堂</div>
+      <div class="tag" id="achv-count"></div>
+    </div>
+    <div class="achv-body" id="achv-list"></div>
+  </div>
+
+  <!-- ====== 错题本 ====== -->
+  <div class="screen" id="screen-wrong">
+    <div class="top-bar">
+      <button class="icon-btn" onclick="UI.goHome()">🏠</button>
+      <div class="title">错题本</div>
+      <div class="tag" id="wrong-count"></div>
+    </div>
+    <div class="wrong-body" id="wrong-list"></div>
+  </div>
+
+  <!-- 通用弹窗 & toast -->
+  <div class="modal-mask" id="modal-mask"><div class="modal" id="modal-box"></div></div>
+  <div id="toast-wrap"></div>
+  <div id="drag-ghost"></div>
+</div>
+</div>
+
+<!-- 离线数据包 (node tools/data-tools.mjs bundle 生成; HTTP 环境下引擎会优先 fetch 最新 JSON) -->
+<script src="data/bundle.js"></script>
+
+<!-- ==================== 游戏引擎 (数据驱动: 不含任何具体词库) ==================== -->
+<script>
+"use strict";
+/* =====================================================================
+   词缀大冒险 · 数据驱动引擎
+   - 引擎只读取 Catalog.chapters，不认识任何具体章节/前缀/单词
+   - 新增章节 = 追加 data/wordbank.csv 行 + node tools/data-tools.mjs all
+   - 数据来源优先级: fetch(chapters_config.json) > data/bundle.js
+===================================================================== */
+
+const CN_NUM = ["一","二","三","四","五","六","七","八","九","十"];
+const cnChapter = i => CN_NUM[i] || String(i + 1);
+
+/* ============ 数据层 (Data Layer) ============ */
+const Catalog = {
+  chapters: [],
+  async load(){
+    let config = null, chapterMap = null;
+    // 优先: HTTP 环境 fetch 最新 JSON
+    try{
+      const r = await fetch("data/chapters_config.json", {cache:"no-store"});
+      if(!r.ok) throw new Error("http " + r.status);
+      config = await r.json();
+      chapterMap = {};
+      for(const c of config.chapters){
+        const rr = await fetch(c.dataFile, {cache:"no-store"});
+        if(!rr.ok) throw new Error("http " + rr.status);
+        chapterMap[c.id] = await rr.json();
+      }
+    }catch(e){
+      // 回退: file:// 直开时使用离线数据包
+      const B = window.__AFFIX_BUNDLE__;
+      if(B && B.config){ config = B.config; chapterMap = B.chapters; }
+    }
+    if(!config) throw new Error("no data source");
+    initGameData(config, chapterMap);
+  }
+};
+
+/* 纯数据装配函数: 供 Catalog.load 与无头测试共用 */
+function initGameData(config, chapterMap){
+  Catalog.chapters = config.chapters.map(c => ({
+    id: c.id,
+    title: c.title,
+    themeName: c.themeName || c.theme || "",
+    story: c.story || "",
+    requirement: c.unlockRequirement || 0,
+    clearAchievement: c.clearAchievement || {ico:"🗺️", title:"通关「"+c.title+"」"},
+    levels: (chapterMap[c.id] ? chapterMap[c.id].levels : []).map(l => ({
+      prefix: l.prefix,
+      meaning: l.meaning || "",
+      school: l.school || null,
+      rule: l.rule || null,
+      assimilationGroup: Array.isArray(l.assimilationGroup) ? l.assimilationGroup : null,
+      scene: l.scene || "",
+      words: (l.words || []).map(w => ({word:w.word, root:w.root, cn:w.cn, difficulty:w.difficulty||1}))
+    }))
+  }));
+}
+
+/* ============ 存档 (v2, 按章节ID索引) ============ */
+const SAVE_KEY = "affixAdventureSave_v2";
+const SAVE_KEY_V1 = "affixAdventureSave_v1";
+let SAVE = {mute:false};
+function defaultSave(){
+  const s = {v:2, stars:{}, cards:[], masterWords:[], achievements:[], wrongWords:[], mute:false, helpSeen:false};
+  Catalog.chapters.forEach(c => (s.stars[c.id] = c.levels.map(()=>0)));
+  return s;
+}
+function loadSave(){
+  const base = defaultSave();
+  let raw = null;
+  try{
+    raw = localStorage.getItem(SAVE_KEY) || localStorage.getItem(SAVE_KEY_V1);
+  }catch(e){}
+  if(raw){
+    try{
+      const old = JSON.parse(raw);
+      base.cards = old.cards || [];
+      base.masterWords = old.masterWords || [];
+      base.wrongWords = old.wrongWords || [];
+      base.achievements = (old.achievements || []).filter(id => typeof id === "string");
+      base.mute = !!old.mute; base.helpSeen = !!old.helpSeen;
+      if(old.v === 2 && old.stars){
+        // v2: 按章节 id 合并 (词库扩关后自动兼容)
+        for(const id in old.stars){
+          if(base.stars[id]){
+            const merged = base.stars[id].slice();
+            (old.stars[id]||[]).slice(0, merged.length).forEach((x,i)=>{ if(x) merged[i]=x; });
+            base.stars[id] = merged;
+          }
+        }
+      }else if(old.stars && old.stars.c2 && base.stars["chap_spatial"]){
+        // v1 迁移: 旧版第二章即空间类
+        base.stars["chap_spatial"] = old.stars.c2.map((x,i)=> x||0).slice(0, base.stars["chap_spatial"].length);
+      }
+    }catch(e){}
+  }
+  return base;
+}
+function persist(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(SAVE)); }catch(e){} }
+
+/* ============ 章节进度 ============ */
+function chapterCleared(ci){ return SAVE.stars[Catalog.chapters[ci].id].every(x=>x>0); }
+function clearedCount(ci){ return SAVE.stars[Catalog.chapters[ci].id].filter(x=>x>0).length; }
+function unlockedCount(ci){ return Math.min(clearedCount(ci)+1, Catalog.chapters[ci].levels.length); }
+function chapterUnlocked(ci){
+  const req = Catalog.chapters[ci].requirement;
+  if(!req) return true;
+  const ri = Catalog.chapters.findIndex(c => c.id === req);
+  return ri < 0 || chapterCleared(ri);
+}
+
+/* ============ 音效 (WebAudio 合成) ============ */
+const Sfx = {
+  ctx:null,
+  ensure(){ if(!this.ctx){ try{ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } },
+  tone(f, t, dur, type, vol){
+    if(!SAVE || SAVE.mute) return; this.ensure(); if(!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type||"sine"; o.frequency.value = f;
+    g.gain.setValueAtTime(vol||.15, this.ctx.currentTime + t);
+    g.gain.exponentialRampToValueAtTime(.001, this.ctx.currentTime + t + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(this.ctx.currentTime + t); o.stop(this.ctx.currentTime + t + dur + .02);
+  },
+  good(){ this.tone(523,0,.12,"triangle",.18); this.tone(784,.09,.16,"triangle",.18); },
+  bad(){ this.tone(196,0,.22,"sawtooth",.08); this.tone(147,.1,.25,"sawtooth",.08); },
+  tap(){ this.tone(660,0,.05,"sine",.08); },
+  match(){ this.tone(659,0,.1,"sine",.15); this.tone(880,.08,.14,"sine",.15); },
+  win(){ [523,659,784,1047].forEach((f,i)=>this.tone(f,i*.12,.22,"triangle",.16)); },
+  lose(){ [330,262,196].forEach((f,i)=>this.tone(f,i*.15,.3,"sawtooth",.07)); }
+};
+
+/* ============ 工具 ============ */
+const $ = id => document.getElementById(id);
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function toast(msg){
+  const el = document.createElement("div"); el.className="toast"; el.innerHTML = msg;
+  $("toast-wrap").appendChild(el);
+  setTimeout(()=>{ el.classList.add("out"); setTimeout(()=>el.remove(),320); }, 2200);
+}
+
+/* ============ 成就 (静态 + 按章节配置自动生成) ============ */
+let ACHIEVEMENTS = [];
+function buildAchievements(){
+  ACHIEVEMENTS = [
+    {id:"first",   ico:"🌟", title:"初出茅庐",   desc:"通过任意章节的第 1 关"},
+    {id:"words40", ico:"📚", title:"词汇达人",   desc:"累计掌握 40 个单词"},
+    {id:"perfect", ico:"💎", title:"完美词猎人", desc:"任意一关零失误通关（3 星）"},
+    {id:"collect", ico:"🃏", title:"卡牌收藏家", desc:"集齐任意一章的全部前缀卡牌"}
+  ];
+  Catalog.chapters.forEach(c => {
+    ACHIEVEMENTS.push({
+      id: "clear_" + c.id,
+      ico: c.clearAchievement.ico,
+      title: c.clearAchievement.title,
+      desc: `通关「${c.title}」全部 ${c.levels.length} 关`
+    });
+  });
+}
+function grantAchv(id){
+  if(SAVE.achievements.includes(id)) return;
+  const a = ACHIEVEMENTS.find(x=>x.id===id); if(!a) return;
+  SAVE.achievements.push(id); persist();
+  toast(`🏆 成就解锁：<b>${a.title}</b> · ${a.desc}`);
+}
+function checkAchvs(){
+  if(Catalog.chapters.some(c => (SAVE.stars[c.id][0]||0) > 0)) grantAchv("first");
+  Catalog.chapters.forEach((c,ci)=>{ if(chapterCleared(ci)) grantAchv("clear_"+c.id); });
+  if(SAVE.masterWords.length >= 40) grantAchv("words40");
+  if(Catalog.chapters.some(c => c.levels.every(l => SAVE.cards.includes(l.prefix)))) grantAchv("collect");
+}
+
+/* ============ UI 路由 ============ */
+const UI = {
+  show(name){
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+    $("screen-"+name).classList.add("active");
+  },
+  goHome(){ Sfx.tap(); this.show("home"); },
+  goMap(){ Sfx.tap(); Map.render(); this.show("map"); },
+  goDict(){ Sfx.tap(); Dict.render(); this.show("dict"); },
+  goAchv(){ Sfx.tap(); Achv.render(); this.show("achv"); },
+  goWrong(){ Sfx.tap(); Wrong.render(); this.show("wrong"); },
+  goHelp(){
+    Sfx.tap();
+    modal(`
+      <h2>🧭 怎么玩</h2>
+      <div class="help-box">
+        <div class="step"><div class="n">1</div><div>看清怪物头顶的<b>目标词义</b>（如「不可能的」）。</div></div>
+        <div class="step"><div class="n">2</div><div>把正确的<b>前缀卡</b>拖到虚线框里，和掉落的<b>词根</b>拼成单词（或直接点击前缀卡）。</div></div>
+        <div class="step"><div class="n">3</div><div>拼对了消灭怪物，拼错了会<b>掉一颗心</b>，一共 3 颗。</div></div>
+        <div class="step"><div class="n">4</div><div>遇到 <b>读音守卫</b>（蓝色卡牌）要注意同化规则：词根以 p/b/m 开头用 im-，l 开头用 il-，r 开头用 ir-！</div></div>
+        <div class="step"><div class="n">5</div><div>消灭所有怪物后进入<b>词义连线</b>；通关解锁<b>前缀卡牌</b>，零失误拿 3 星！</div></div>
+      </div>
+      <div class="btn-row" style="margin-top:16px"><button class="btn" onclick="closeModal()">明白了！</button></div>
+    `);
+  }
+};
+function modal(html){ $("modal-box").innerHTML = html; $("modal-mask").classList.add("show"); }
+function closeModal(){ $("modal-mask").classList.remove("show"); }
+
+/* ============ 首页装饰 ============ */
+(function homeDecor(){
+  const stars = $("home-stars");
+  for(let i=0;i<30;i++){
+    const s = document.createElement("div"); s.className="star-dot";
+    s.style.left = Math.random()*100+"%"; s.style.top = Math.random()*100+"%";
+    s.style.animationDelay = Math.random()*3+"s";
+    stars.appendChild(s);
+  }
+  const affixes = ["pro-","trans-","sub-","over-","ex-","inter-","under-","out-","sur-","im-","anti-","port","form","dict","vert"];
+  for(let i=0;i<10;i++){
+    const f = document.createElement("div"); f.className="float-affix";
+    f.textContent = affixes[i%affixes.length];
+    f.style.left = Math.random()*90+"%";
+    f.style.fontSize = (14+Math.random()*16)+"px";
+    f.style.animationDuration = (9+Math.random()*10)+"s";
+    f.style.animationDelay = (-Math.random()*10)+"s";
+    stars.appendChild(f);
+  }
+})();
+
+/* ============ 地图 ============ */
+const Map = {
+  cur: 0,
+  render(){
+    const tabs = $("chapter-tabs"); tabs.innerHTML = "";
+    Catalog.chapters.forEach((c,i)=>{
+      const locked = !chapterUnlocked(i);
+      const t = document.createElement("div");
+      t.className = "chapter-tab"+(this.cur===i?" on":"")+(locked?" lock":"");
+      t.innerHTML = `第${cnChapter(i)}章 · ${esc(c.title)}${locked?" 🔒":""}`;
+      t.onclick = ()=>{
+        if(!chapterUnlocked(i)){
+          const prev = Catalog.chapters[i-1];
+          toast(`🔒 先通关「${esc(prev.title)}」才能解锁本章`);
+          return;
+        }
+        this.cur = i; Sfx.tap(); this.render();
+      };
+      tabs.appendChild(t);
+    });
+
+    const c = Catalog.chapters[this.cur];
+    $("chapter-banner").innerHTML =
+      `<div class="name">第${cnChapter(this.cur)}章 · ${esc(c.title)} <span style="font-size:13px;color:#b7aef0">${esc(c.themeName)}</span></div>
+       <div class="desc">${esc(c.story)}</div>`;
+
+    const path = $("level-path"); path.innerHTML="";
+    const unlocked = unlockedCount(this.cur);
+    c.levels.forEach((lv,i)=>{
+      if(i>0){ const cn=document.createElement("div"); cn.className="level-connector"; path.appendChild(cn); }
+      const st = SAVE.stars[c.id][i];
+      const node = document.createElement("div");
+      node.className = "level-node"+(st>0?" cleared":"")+(i>=unlocked?" locked":"");
+      node.innerHTML = `<div class="num">${i+1}</div><div class="pfx">${esc(lv.prefix)}</div>
+        <div class="stars">${st>0?"★".repeat(st)+"☆".repeat(3-st):esc(lv.meaning.split("(")[0])}</div>`;
+      node.title = lv.prefix + " " + lv.meaning + (lv.school ? " · " + lv.school : "");
+      if(i < unlocked){
+        node.onclick = ()=>{ Sfx.tap(); Game.start(this.cur, i); };
+      }
+      path.appendChild(node);
+    });
+  }
+};
+
+/* ============ 游戏核心 ============ */
+const Game = {
+  ci:0, li:0, lv:null,
+  words:[], idx:0, hp:3, score:0, combo:0, mistakes:0,
+  learned:[], phase:"combine",
+  monsterColors:["#7c3aed","#ef4444","#0ea5e9","#f59e0b","#10b981","#ec4899","#8b5cf6","#14b8a6"],
+
+  start(ci, li){
+    this.ci=ci; this.li=li;
+    this.lv = Catalog.chapters[ci].levels[li];
+    this.words = shuffle(this.lv.words);
+    this.idx=0; this.hp=3; this.score=0; this.combo=0; this.mistakes=0; this.learned=[];
+    UI.show("game");
+    if(!SAVE.helpSeen){ SAVE.helpSeen = true; persist(); UI.goHelp(); }
+    this.nextWord();
+  },
+
+  hud(){
+    const ch = Catalog.chapters[this.ci];
+    $("g-level-name").innerHTML =
+      `第${cnChapter(this.ci)}章 · ${esc(this.lv.prefix)} ${esc(this.lv.meaning)}` +
+      (this.lv.school ? ` <span style="font-size:11px;color:#c9c2ff">${esc(this.lv.school)}</span>` : "");
+    let h=""; for(let i=0;i<3;i++) h+=`<span class="${i<this.hp?"":"lost"}">❤️</span>`;
+    $("g-hearts").innerHTML = h;
+    $("g-score").textContent = this.score;
+  },
+
+  /* 干扰项生成: 同化组优先互为干扰 (教学: 让玩家辨析 in/im/il/ir) */
+  makeDecoys(){
+    let decoys = [];
+    if(this.lv.assimilationGroup){
+      decoys = shuffle(this.lv.assimilationGroup.filter(p=>p!==this.lv.prefix)).slice(0,3);
+    }
+    const pool = shuffle(Catalog.chapters[this.ci].levels
+      .map(l=>l.prefix)
+      .filter(p=>p!==this.lv.prefix && !decoys.includes(p)));
+    while(decoys.length<3 && pool.length) decoys.push(pool.pop());
+    return decoys;
+  },
+
+  nextWord(){
+    if(this.idx >= this.words.length){ this.startMatch(); return; }
+    const w = this.words[this.idx];
+    this.phase = "combine";
+    $("g-combine").style.display="flex";
+    $("g-match").style.display="none";
+    $("g-scene").style.display="block";
+    $("g-slot").innerHTML = "把前缀拖到这里";
+    this.hud();
+
+    $("g-dots").innerHTML = this.words.map((_,i)=>
+      `<div class="dot ${i<this.idx?"done":i===this.idx?"cur":""}"></div>`).join("");
+
+    // 场景 & 怪物
+    const mc = this.monsterColors[(this.li*3+this.idx)%this.monsterColors.length];
+    $("g-monster").className="monster";
+    $("g-monster").innerHTML = `
+      <svg viewBox="0 0 120 110">
+        <path d="M18 100 L18 50 Q18 12 60 12 Q102 12 102 50 L102 100 L84 88 L72 100 L60 88 L48 100 L36 88 Z"
+          fill="${mc}" stroke="rgba(0,0,0,.25)" stroke-width="3"/>
+        <path d="M30 44 Q60 26 90 44" stroke="rgba(255,255,255,.4)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="34" cy="72" r="7" fill="rgba(255,255,255,.25)"/>
+        <circle cx="86" cy="78" r="5" fill="rgba(255,255,255,.25)"/>
+      </svg>
+      <div class="eyes"><div class="eye"></div><div class="eye"></div></div>`;
+    $("g-speech").innerHTML =
+      `${esc(this.lv.scene)}<br>我的弱点是词义为 <span class="kw">「${esc(w.cn)}」</span> 的单词！` +
+      (this.lv.rule ? `<br><span class="rule-badge">⚠️ 读音守卫：${esc(this.lv.rule)}</span>` : "");
+
+    // 词根卡
+    const rc = $("g-root");
+    rc.style.animation="none"; rc.offsetHeight; rc.style.animation="";
+    rc.innerHTML = `<div class="r">${esc(w.root)}</div><div class="hint">词根 · root</div>`;
+
+    // 选项: 正确前缀 + 3 个干扰项
+    const opts = shuffle([this.lv.prefix, ...this.makeDecoys()]);
+    const levels = Catalog.chapters[this.ci].levels;
+    $("g-options").innerHTML = opts.map(p=>{
+      const lv = levels.find(l=>l.prefix===p) || {meaning:""};
+      const isAssim = !!(lv.assimilationGroup);
+      return `<div class="pfx-tile${isAssim?" assim":""}" data-p="${esc(p)}">
+        <div class="p">${esc(p)}</div><div class="m">${esc((lv.meaning||"").split("(")[0])}</div></div>`;
+    }).join("");
+    Drag.bind();
+  },
+
+  attempt(prefix, tileEl){
+    if(this.phase!=="combine") return;
+    const w = this.words[this.idx];
+    if(prefix === this.lv.prefix){
+      // ✅ 正确 (锁定作答, 防止连点)
+      this.phase = "wait";
+      this.combo++;
+      const bonus = 10*(this.combo-1);
+      this.score += 100 + bonus;
+      if(!SAVE.masterWords.includes(w.word)){ SAVE.masterWords.push(w.word); }
+      if(SAVE.wrongWords.includes(w.word)) SAVE.wrongWords = SAVE.wrongWords.filter(x=>x!==w.word);
+      persist();
+      if(tileEl) tileEl.classList.add("glow");
+      $("g-slot").innerHTML = `<div class="p" style="font-size:22px;font-weight:900;font-style:italic;color:#4ade80">${esc(prefix)}</div>`;
+      const f = $("g-flash");
+      f.innerHTML = `${esc(w.word)}<span class="cn">${esc(w.cn)} ${this.combo>1?`· Combo ×${this.combo}!`:""}</span>`;
+      f.classList.remove("show"); f.offsetHeight; f.classList.add("show");
+      Sfx.good();
+      $("g-monster").classList.add("dead");
+      this.hud();
+      this.learned.push(w);
+      setTimeout(()=>{ this.idx++; this.nextWord(); }, 1050);
+    }else{
+      // ❌ 错误
+      this.combo=0; this.mistakes++; this.hp--;
+      if(tileEl){ tileEl.classList.add("shake"); setTimeout(()=>tileEl.classList.remove("shake"),450); }
+      if(!SAVE.wrongWords.includes(w.word)) SAVE.wrongWords.push(w.word);
+      persist();
+      Sfx.bad(); this.hud();
+      let fb = `❌ <b>${esc(prefix)}${esc(w.root)}</b> 可不是「${esc(w.cn)}」的意思哦！`;
+      if(this.lv.rule) fb += `<br><span class="rule-badge">💡 ${esc(this.lv.rule)}</span>`;
+      $("g-speech").innerHTML = fb;
+      if(this.hp<=0){ this.phase="wait"; setTimeout(()=>this.fail(), 500); }
+    }
+  },
+
+  /* ---- 词义连线阶段 ---- */
+  startMatch(){
+    this.phase = "match";
+    this.selL=null; this.selR=null; this.matched=0;
+    $("g-combine").style.display="none";
+    $("g-match").style.display="flex";
+    $("g-dots").innerHTML = this.words.map(()=>`<div class="dot done"></div>`).join("");
+    $("g-scene").style.display="none";
+    $("g-level-name").textContent = `第${cnChapter(this.ci)}章 · 词义连线`;
+    this.hud();
+
+    const left = shuffle(this.learned);
+    const right = shuffle(this.learned.map(w=>({cn:w.cn, word:w.word})));
+    $("mc-left").innerHTML = left.map(w=>
+      `<div class="match-item" data-w="${esc(w.word)}">${esc(w.word)}</div>`).join("");
+    $("mc-right").innerHTML = right.map(w=>
+      `<div class="match-item meaning" data-w="${esc(w.word)}">${esc(w.cn)}</div>`).join("");
+
+    document.querySelectorAll("#mc-left .match-item").forEach(el=>{
+      el.onclick = ()=>{ Sfx.tap(); this.pick("L", el); };
+    });
+    document.querySelectorAll("#mc-right .match-item").forEach(el=>{
+      el.onclick = ()=>{ Sfx.tap(); this.pick("R", el); };
+    });
+    $("match-svg").innerHTML = "";
+  },
+  pick(side, el){
+    if(this.phase!=="match" || el.classList.contains("ok")) return;
+    document.querySelectorAll(`#mc-${side} .match-item.sel`).forEach(x=>x.classList.remove("sel"));
+    el.classList.add("sel");
+    if(side==="L") this.selL=el; else this.selR=el;
+    if(this.selL && this.selR){
+      const a=this.selL, b=this.selR;
+      this.selL=null; this.selR=null;
+      if(a.dataset.w === b.dataset.w){
+        a.classList.remove("sel"); b.classList.remove("sel");
+        a.classList.add("ok"); b.classList.add("ok");
+        drawLine(a,b);
+        this.score+=50; this.matched++; Sfx.match(); this.hud();
+        if(this.matched===this.learned.length) setTimeout(()=>this.win(), 600);
+      }else{
+        this.hp--; this.mistakes++; Sfx.bad(); this.hud();
+        a.classList.add("err"); b.classList.add("err");
+        setTimeout(()=>{ a.classList.remove("err","sel"); b.classList.remove("err","sel"); }, 450);
+        if(this.hp<=0){ this.phase="wait"; setTimeout(()=>this.fail(), 500); }
+      }
+    }
+  },
+
+  stars(){ return this.mistakes===0?3 : this.mistakes===1?2 : 1; },
+
+  win(){
+    Sfx.win();
+    const stars = this.stars();
+    const ch = Catalog.chapters[this.ci];
+    if(SAVE.stars[ch.id][this.li] < stars) SAVE.stars[ch.id][this.li] = stars;
+    let cardHtml = "";
+    if(!SAVE.cards.includes(this.lv.prefix)){
+      SAVE.cards.push(this.lv.prefix);
+      cardHtml = `<div class="card-unlock">
+        <div class="cu-label">✦ 新卡牌解锁 ✦</div>
+        <div class="cu-pfx">${esc(this.lv.prefix)}</div>
+        <div class="cu-mean">${esc(this.lv.meaning)}</div></div>`;
+    }
+    persist();
+    checkAchvs();
+    if(stars===3) grantAchv("perfect");
+    if(this.li===0) grantAchv("first");
+    const nextLi = this.li+1, hasNext = nextLi < ch.levels.length;
+    modal(`
+      <h2>🎉 关卡通过！</h2>
+      <div class="stars-row">${"★".repeat(stars)}<span class="dim">${"★".repeat(3-stars)}</span></div>
+      <div class="score-line">得分 ${this.score}</div>
+      <div class="detail">本关掌握单词：${this.learned.map(w=>`<b>${esc(w.word)}</b>`).join(" · ")}<br>
+      ${this.mistakes===0?"💎 零失误，完美通关！":`失误 ${this.mistakes} 次，错词已记入错题本`}</div>
+      ${cardHtml}
+      <div class="btn-row">
+        ${hasNext?`<button class="btn" onclick="Game.nextLevel()">下一关 ➡️</button>`:
+          `<button class="btn" onclick="Game.chapterDone()">继续 🎊</button>`}
+        <button class="btn ghost" onclick="Game.replay()">再玩一次</button>
+        <button class="btn ghost" onclick="UI.goMap()">返回地图</button>
+      </div>`);
+  },
+  fail(){
+    Sfx.lose();
+    modal(`
+      <h2>💀 心用完了……</h2>
+      <div class="detail" style="margin-top:10px">
+        别灰心！记住这个规律：<br>
+        <b>${esc(this.lv.prefix)}</b> = ${esc(this.lv.meaning)}<br>
+        ${this.lv.rule ? `<span class="rule-badge">💡 ${esc(this.lv.rule)}</span><br>` : ""}
+        错过的词已经放进错题本了，去复习一下再战吧！
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="Game.replay()">🔁 重新挑战</button>
+        <button class="btn ghost" onclick="UI.goMap()">返回地图</button>
+      </div>`);
+  },
+  quit(){ this.phase=null; UI.goMap(); },
+  replay(){ closeModal(); this.start(this.ci, this.li); },
+  nextLevel(){ closeModal(); this.start(this.ci, this.li+1); },
+  chapterDone(){
+    closeModal();
+    const ch = Catalog.chapters[this.ci];
+    toast(`🎊 「${esc(ch.title)}」通关！新的章节已解锁`);
+    UI.goMap();
+  }
+};
+
+function drawLine(a,b){
+  const svg = $("match-svg"), wrap = $("g-match-cols");
+  const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(), rw = wrap.getBoundingClientRect();
+  const x1 = (a.parentElement.id==="mc-left" ? ra.right : ra.left) - rw.left;
+  const y1 = ra.top + ra.height/2 - rw.top;
+  const x2 = (b.parentElement.id==="mc-left" ? rb.right : rb.left) - rw.left;
+  const y2 = rb.top + rb.height/2 - rw.top;
+  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  const mx = (x1+x2)/2;
+  path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+  path.setAttribute("stroke","#4ade80"); path.setAttribute("stroke-width","4");
+  path.setAttribute("fill","none"); path.setAttribute("stroke-linecap","round");
+  path.style.opacity=".9";
+  svg.appendChild(path);
+}
+
+/* ============ 拖拽 / 点选 ============ */
+const Drag = {
+  ghost:null, srcTile:null, moved:false, startX:0, startY:0,
+  bind(){
+    document.querySelectorAll("#g-options .pfx-tile").forEach(tile=>{
+      tile.onpointerdown = (e)=>this.down(e, tile);
+    });
+  },
+  down(e, tile){
+    e.preventDefault();
+    this.srcTile = tile; this.moved=false;
+    this.startX=e.clientX; this.startY=e.clientY;
+    this.ghost = $("drag-ghost");
+    this.ghost.innerHTML = tile.innerHTML;
+    this.ghost.style.display="none";
+    const mv = (ev)=>this.move(ev);
+    const up = (ev)=>{ this.move(ev); document.removeEventListener("pointermove",mv); document.removeEventListener("pointerup",up); this.up(ev); };
+    document.addEventListener("pointermove",mv);
+    document.addEventListener("pointerup",up);
+  },
+  move(e){
+    const dx=e.clientX-this.startX, dy=e.clientY-this.startY;
+    if(Math.abs(dx)>6||Math.abs(dy)>6) this.moved=true;
+    if(this.moved){
+      this.ghost.style.display="flex";
+      this.ghost.style.left=e.clientX+"px"; this.ghost.style.top=e.clientY+"px";
+      this.ghost.style.background="linear-gradient(180deg,#7c3aed,#5b21b6)";
+      this.ghost.style.border="2px solid #a78bfa"; this.ghost.style.borderRadius="16px";
+      this.ghost.style.padding="14px 16px"; this.ghost.style.flexDirection="column";
+      this.ghost.style.alignItems="center"; this.ghost.style.gap="2px";
+      this.ghost.style.color="#fff"; this.ghost.style.fontWeight="900";
+      const slot = $("g-slot"), r = slot.getBoundingClientRect();
+      const hot = e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom;
+      slot.classList.toggle("hot", hot);
+    }
+  },
+  up(e){
+    $("g-slot").classList.remove("hot");
+    const slot = $("g-slot"), r = slot.getBoundingClientRect();
+    const inSlot = e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom;
+    this.ghost.style.display="none";
+    if(!this.srcTile) return;
+    const tile = this.srcTile; this.srcTile=null;
+    if(tile.classList.contains("used")) return;
+    if(inSlot || !this.moved){           // 拖到槽里, 或者只是点击
+      Game.attempt(tile.dataset.p, tile);
+    }
+  }
+};
+
+/* ============ 图鉴 ============ */
+const Dict = {
+  render(){
+    const grid = $("dict-grid"); grid.innerHTML="";
+    Catalog.chapters.forEach((c,ci)=>{
+      c.levels.forEach(lv=>{
+        const got = SAVE.cards.includes(lv.prefix);
+        const card = document.createElement("div");
+        if(got){
+          card.className="dict-card";
+          card.innerHTML = `<div class="dc-chip">第${cnChapter(ci)}章</div>
+            <div class="dc-pfx">${esc(lv.prefix)}</div>
+            <div class="dc-mean">${esc(lv.meaning)}</div>
+            ${lv.school?`<div class="dc-school">${esc(lv.school)}</div>`:""}
+            ${lv.rule?`<div class="dc-rule">⚠️ ${esc(lv.rule)}</div>`:""}
+            <div class="dc-scene">🗺️ ${esc(lv.scene)}</div>
+            <div class="dc-words">${lv.words.map(w=>`<b>${esc(w.word)}</b> ${esc(w.cn)}`).join("<br>")}</div>`;
+        }else{
+          card.className="dict-card locked";
+          card.innerHTML = `<div class="lock">🔒</div><div>通关第${cnChapter(ci)}章对应关卡<br>解锁这张卡牌</div>`;
+        }
+        grid.appendChild(card);
+      });
+    });
+    const total = Catalog.chapters.reduce((n,c)=>n+c.levels.length,0);
+    $("dict-count").textContent = `收集 ${SAVE.cards.length} / ${total}`;
+  }
+};
+
+/* ============ 成就 ============ */
+const Achv = {
+  render(){
+    const list = $("achv-list"); list.innerHTML="";
+    ACHIEVEMENTS.forEach(a=>{
+      const got = SAVE.achievements.includes(a.id);
+      const el = document.createElement("div");
+      el.className = "achv-item"+(got?" got":"");
+      el.innerHTML = `<div class="ico">${a.ico}</div>
+        <div><div class="t">${esc(a.title)}</div><div class="d">${esc(a.desc)}</div></div>
+        <div class="st">${got?"✓ 已解锁":"未解锁"}</div>`;
+      list.appendChild(el);
+    });
+    $("achv-count").textContent = `已解锁 ${SAVE.achievements.length} / ${ACHIEVEMENTS.length}`;
+  }
+};
+
+/* ============ 错题本 ============ */
+const Wrong = {
+  render(){
+    const list = $("wrong-list"); list.innerHTML="";
+    if(SAVE.wrongWords.length===0){
+      list.innerHTML = `<div style="text-align:center;color:#9d94e8;padding:40px 20px;line-height:2">
+        🌟 暂无错题！<br>保持下去，你就是词汇大师！</div>`;
+    }else{
+      const all = {};
+      Catalog.chapters.forEach(c=>c.levels.forEach(lv=>{
+        lv.words.forEach(w=>{
+          if(SAVE.wrongWords.includes(w.word)) all[w.word]=w;
+        });
+      }));
+      Object.values(all).forEach(w=>{
+        const el = document.createElement("div");
+        el.className="wrong-item";
+        el.innerHTML = `<div class="w">${esc(w.word)}<span>${esc(w.cn)}</span></div>
+          <div class="fix">在关卡中拼对一次即可移出 📗</div>`;
+        list.appendChild(el);
+      });
+    }
+    $("wrong-count").textContent = `共 ${SAVE.wrongWords.length} 词`;
+  }
+};
+
+/* ============ 启动 ============ */
+function startGame(){
+  SAVE = loadSave();
+  buildAchievements();
+  checkAchvs();
+  const nCh = Catalog.chapters.length;
+  const nW = Catalog.chapters.reduce((n,c)=>n+c.levels.reduce((m,l)=>m+l.words.length,0),0);
+  const nLv = Catalog.chapters.reduce((n,c)=>n+c.levels.length,0);
+  $("home-foot").innerHTML =
+    `已加载 <b style="color:#ffd166">${nCh}</b> 章 · ${nLv} 个前缀关卡 · ${nW} 个单词<br>长期坚持产生的复利能够改变人生`;
+  UI.show("home");
+}
+
+(async function boot(){
+  try{
+    await Catalog.load();
+    startGame();
+  }catch(e){
+    $("load-error").style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>
