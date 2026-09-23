@@ -583,7 +583,7 @@ const UI = {
     $("screen-"+name).classList.add("active");
   },
   goHome(){ Sfx.tap(); this.show("home"); },
-  goMap(){ Sfx.tap(); Map.render(); this.show("map"); },
+  goMap(){ Sfx.tap(); closeModal(); Map.render(); this.show("map"); },
   goDict(){ Sfx.tap(); Dict.render(); this.show("dict"); },
   goAchv(){ Sfx.tap(); Achv.render(); this.show("achv"); },
   goWrong(){ Sfx.tap(); Wrong.render(); this.show("wrong"); },

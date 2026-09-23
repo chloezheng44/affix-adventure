@@ -193,7 +193,9 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   assert(G.SAVE.wrongWords.length === 3, "错题本共 3 词 (im-关 + col-关 + pro-关各 1)");
 
   // ---- 4.5 重玩 im- 关卡 (全程首次拼对) → 错词移出错题本 ----
-  G.closeModal();
+  assert(els["modal-mask"]._classes.has("show"), "结算弹窗处于打开状态");
+  G.UI.goMap();
+  assert(!els["modal-mask"]._classes.has("show"), "返回地图时自动关闭结算弹窗 (修复回归)");
   G.Game.start(0, 9);
   const nIm = CAT[0].levels[9].words.length;
   for (let i = 0; i < nIm; i++) { G.Game.attempt(G.Game.lv.prefix, null); await sleep(30); }
