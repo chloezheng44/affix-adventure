@@ -138,15 +138,18 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   G.Game.attempt("in-", null); // im- 关卡选 in- 是错的
   assert(G.Game.hp === 2, "同化选错扣血");
   assert(els["g-speech"].innerHTML.includes("💡"), "答错时反馈同化规则教学");
-  assert(G.SAVE.wrongWords.includes(G.Game.words[0].word), "错词记入错题本");
+  const missedIm = G.Game.words[0].word;
+  assert(G.SAVE.wrongWords.includes(missedIm), "错词记入错题本");
   G.Game.attempt("im-", null);
   await sleep(30);
   assert(G.Game.idx === 1, "答对后进入下一题");
+  assert(G.SAVE.wrongWords.includes(missedIm), "本次闯关拼对不移出错题本 (保留至下次重玩)");
 
   // ---- 4. 完整通关第二章第1关 (pro-): 1次失误 → 2星 ----
   G.Game.start(1, 0);
   assert(G.Game.lv.prefix === "pro-", "进入 pro- 关卡");
   const nWords = CAT[1].levels[0].words.length;
+  const missedPro = G.Game.words[0].word;   // 循环里对第 1 个词先答错一次
   for (let i = 0; i < nWords; i++) {
     G.Game.phase = "combine";
     if (i === 0) G.Game.attempt("sub-", null);
@@ -167,6 +170,45 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   assert(G.SAVE.cards.includes("pro-"), "解锁 pro- 前缀卡牌");
   assert(G.SAVE.achievements.includes("first"), "成就「初出茅庐」解锁");
   assert(!G.SAVE.achievements.includes("clear_chap_neg"), "章节通关成就未误发");
+  assert(G.SAVE.wrongWords.includes(missedPro), "拼错过关的词保留在错题本 (bug修复)");
+  assert(G.SAVE.wrongWords.length === 2, "错题本共 2 词 (im-关 + pro-关各 1)");
+
+  // ---- 4.5 重玩 im- 关卡 (全程首次拼对) → 错词移出错题本 ----
+  G.closeModal();
+  G.Game.start(0, 9);
+  const nIm = CAT[0].levels[9].words.length;
+  for (let i = 0; i < nIm; i++) { G.Game.attempt(G.Game.lv.prefix, null); await sleep(30); }
+  await sleep(50);
+  assert(G.Game.phase === "match", "重玩 im- 关进入连线阶段");
+  for (const w of G.Game.learned) {
+    const a = makeEl(); a.dataset.w = w.word; a.parentElement = makeEl("mc-left");
+    const b = makeEl(); b.dataset.w = w.word; b.parentElement = makeEl("mc-right");
+    G.Game.pick("L", a); G.Game.pick("R", b);
+  }
+  await sleep(30);
+  assert(!G.SAVE.wrongWords.includes(missedIm), "重玩拼对 → 错词移出错题本");
+  assert(G.SAVE.wrongWords.includes(missedPro), "其他关卡的错词不受影响");
+
+  // ---- 4.7 连线配错也记入错题本 (第三章 uni- 关) ----
+  G.closeModal();
+  G.Game.start(2, 0);
+  const nU = CAT[2].levels[0].words.length;
+  for (let i = 0; i < nU; i++) { G.Game.attempt(G.Game.lv.prefix, null); await sleep(30); }
+  await sleep(50);
+  assert(G.Game.phase === "match", "uni- 关进入连线阶段");
+  const w0 = G.Game.learned[0];
+  const w1 = G.Game.learned[1] || G.Game.learned[0];
+  const a0 = makeEl(); a0.dataset.w = w0.word; a0.parentElement = makeEl("mc-left");
+  const bBad = makeEl(); bBad.dataset.w = w1.word; bBad.parentElement = makeEl("mc-right");
+  G.Game.pick("L", a0); G.Game.pick("R", bBad);
+  assert(G.SAVE.wrongWords.includes(w0.word) && G.SAVE.wrongWords.includes(w1.word), "连线配错的两个词都记入错题本");
+  for (const w of G.Game.learned) {
+    const a = makeEl(); a.dataset.w = w.word; a.parentElement = makeEl("mc-left");
+    const b = makeEl(); b.dataset.w = w.word; b.parentElement = makeEl("mc-right");
+    G.Game.pick("L", a); G.Game.pick("R", b);
+  }
+  assert(G.Game.matched === G.Game.learned.length, "连线全部配对成功");
+  assert(G.SAVE.wrongWords.includes(w0.word), "本次连错的词不移出错题本");
 
   // ---- 5. 失败流程 ----
   G.closeModal();

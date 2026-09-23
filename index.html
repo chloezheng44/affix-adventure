@@ -343,7 +343,7 @@ body{
     <div class="progress-dots" id="g-dots"></div>
     <div id="g-combine" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
       <div class="combine-zone">
-        <div class="prefix-slot" id="g-slot">把前缀拖到这里</div>
+        <div class="prefix-slot" id="g-slot">选个前缀吧</div>
         <div class="plus">+</div>
         <div class="root-card" id="g-root"></div>
       </div>
@@ -682,6 +682,7 @@ const Game = {
     this.lv = Catalog.chapters[ci].levels[li];
     this.words = shuffle(this.lv.words);
     this.idx=0; this.hp=3; this.score=0; this.combo=0; this.mistakes=0; this.learned=[];
+    this.runWrong = new Set();   // 本次闯关拼错过的词 (当天拼对不移出, 下次重玩拼对才移出)
     UI.show("game");
     if(!SAVE.helpSeen){ SAVE.helpSeen = true; persist(); UI.goHelp(); }
     this.nextWord();
@@ -717,7 +718,7 @@ const Game = {
     $("g-combine").style.display="flex";
     $("g-match").style.display="none";
     $("g-scene").style.display="block";
-    $("g-slot").innerHTML = "把前缀拖到这里";
+    $("g-slot").innerHTML = "选个前缀吧";
     this.hud();
 
     $("g-dots").innerHTML = this.words.map((_,i)=>
@@ -766,7 +767,8 @@ const Game = {
       const bonus = 10*(this.combo-1);
       this.score += 100 + bonus;
       if(!SAVE.masterWords.includes(w.word)){ SAVE.masterWords.push(w.word); }
-      if(SAVE.wrongWords.includes(w.word)) SAVE.wrongWords = SAVE.wrongWords.filter(x=>x!==w.word);
+      // 本次闯关拼错过的不移出 (留在错题本, 下次重玩拼对才移出)
+      if(!this.runWrong.has(w.word) && SAVE.wrongWords.includes(w.word)) SAVE.wrongWords = SAVE.wrongWords.filter(x=>x!==w.word);
       persist();
       if(tileEl) tileEl.classList.add("glow");
       $("g-slot").innerHTML = `<div class="p" style="font-size:22px;font-weight:900;font-style:italic;color:#4ade80">${esc(prefix)}</div>`;
@@ -782,6 +784,7 @@ const Game = {
       // ❌ 错误
       this.combo=0; this.mistakes++; this.hp--;
       if(tileEl){ tileEl.classList.add("shake"); setTimeout(()=>tileEl.classList.remove("shake"),450); }
+      this.runWrong.add(w.word);
       if(!SAVE.wrongWords.includes(w.word)) SAVE.wrongWords.push(w.word);
       persist();
       Sfx.bad(); this.hud();
@@ -830,10 +833,20 @@ const Game = {
         a.classList.remove("sel"); b.classList.remove("sel");
         a.classList.add("ok"); b.classList.add("ok");
         drawLine(a,b);
+        // 本次闯关连错过的词不移出错题本
+        const wd = a.dataset.w;
+        if(!this.runWrong.has(wd) && SAVE.wrongWords.includes(wd)) SAVE.wrongWords = SAVE.wrongWords.filter(x=>x!==wd);
+        persist();
         this.score+=50; this.matched++; Sfx.match(); this.hud();
         if(this.matched===this.learned.length) setTimeout(()=>this.win(), 600);
       }else{
         this.hp--; this.mistakes++; Sfx.bad(); this.hud();
+        // 连错的两个词都记入错题本
+        for(const wd of [a.dataset.w, b.dataset.w]){
+          this.runWrong.add(wd);
+          if(!SAVE.wrongWords.includes(wd)) SAVE.wrongWords.push(wd);
+        }
+        persist();
         a.classList.add("err"); b.classList.add("err");
         setTimeout(()=>{ a.classList.remove("err","sel"); b.classList.remove("err","sel"); }, 450);
         if(this.hp<=0){ this.phase="wait"; setTimeout(()=>this.fail(), 500); }
@@ -1031,7 +1044,7 @@ const Wrong = {
         const el = document.createElement("div");
         el.className="wrong-item";
         el.innerHTML = `<div class="w">${esc(w.word)}<span>${esc(w.cn)}</span></div>
-          <div class="fix">在关卡中拼对一次即可移出 📗</div>`;
+          <div class="fix">重玩本关并拼对一次即可移出 📗</div>`;
         list.appendChild(el);
       });
     }
