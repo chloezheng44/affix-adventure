@@ -1,0 +1,375 @@
+{
+  "chapterId": "chap_quantity",
+  "levels": [
+    {
+      "prefix": "semi-",
+      "meaning": "半 (half)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "裁决之刃！将敌方护甲直接削减一半！",
+      "words": [
+        {
+          "word": "semicircle",
+          "root": "circle",
+          "cn": "半圆",
+          "difficulty": 1
+        },
+        {
+          "word": "semifinal",
+          "root": "final",
+          "cn": "半决赛",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "demi-",
+      "meaning": "半/次等 (half)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "半神首领守卫着破碎之镜！",
+      "words": [
+        {
+          "word": "demigod",
+          "root": "god",
+          "cn": "半神",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "hemi-",
+      "meaning": "半 (half)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "半球护盾折射着迷宫的激光！",
+      "words": [
+        {
+          "word": "hemisphere",
+          "root": "sphere",
+          "cn": "半球",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "uni-",
+      "meaning": "一 (one)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "独眼守卫只放行「一」的单词！",
+      "words": [
+        {
+          "word": "uniform",
+          "root": "form",
+          "cn": "制服；统一的",
+          "difficulty": 1
+        },
+        {
+          "word": "unit",
+          "root": "it",
+          "cn": "单元；单位",
+          "difficulty": 1
+        },
+        {
+          "word": "unicorn",
+          "root": "corn",
+          "cn": "独角兽",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "mono-",
+      "meaning": "单一 (single)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "静默领域！巨头怪吞噬周围的一切！",
+      "words": [
+        {
+          "word": "monologue",
+          "root": "logue",
+          "cn": "独白",
+          "difficulty": 2
+        },
+        {
+          "word": "monopoly",
+          "root": "poly",
+          "cn": "垄断",
+          "difficulty": 2
+        },
+        {
+          "word": "monorail",
+          "root": "rail",
+          "cn": "单轨铁路",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "bi-",
+      "meaning": "二 (two)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "双头怪正在路口徘徊！",
+      "words": [
+        {
+          "word": "bicycle",
+          "root": "cycle",
+          "cn": "自行车",
+          "difficulty": 1
+        },
+        {
+          "word": "bilingual",
+          "root": "lingual",
+          "cn": "双语的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "di-",
+      "meaning": "二/双 (two)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "双生毒物必须同时击杀！",
+      "words": [
+        {
+          "word": "dioxide",
+          "root": "oxide",
+          "cn": "二氧化物",
+          "difficulty": 2
+        },
+        {
+          "word": "diploma",
+          "root": "ploma",
+          "cn": "文凭",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "tri-",
+      "meaning": "三 (three)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "三角阵法封锁了石门！",
+      "words": [
+        {
+          "word": "triangle",
+          "root": "angle",
+          "cn": "三角形",
+          "difficulty": 1
+        },
+        {
+          "word": "tricycle",
+          "root": "cycle",
+          "cn": "三轮车",
+          "difficulty": 1
+        },
+        {
+          "word": "triple",
+          "root": "ple",
+          "cn": "三倍的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "quadr-",
+      "meaning": "四 (four)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "四方结界封锁战场四角！",
+      "words": [
+        {
+          "word": "quadrangle",
+          "root": "angle",
+          "cn": "四边形",
+          "difficulty": 2
+        },
+        {
+          "word": "quadruped",
+          "root": "ped",
+          "cn": "四足动物",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "penta-",
+      "meaning": "五 (five)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "五星连珠！元素法阵启动！",
+      "words": [
+        {
+          "word": "pentagon",
+          "root": "gon",
+          "cn": "五边形；五角大楼",
+          "difficulty": 2
+        },
+        {
+          "word": "pentathlon",
+          "root": "thlon",
+          "cn": "五项全能",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "deca-",
+      "meaning": "十 (ten)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "十倍杠杆撬动巨石机关！",
+      "words": [
+        {
+          "word": "decade",
+          "root": "de",
+          "cn": "十年",
+          "difficulty": 1
+        },
+        {
+          "word": "decathlon",
+          "root": "thlon",
+          "cn": "十项全能",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "deci-",
+      "meaning": "十分之一 (tenth)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "微缩光线将敌人缩至十分之一！",
+      "words": [
+        {
+          "word": "decimeter",
+          "root": "meter",
+          "cn": "分米",
+          "difficulty": 1
+        },
+        {
+          "word": "decimal",
+          "root": "mal",
+          "cn": "小数",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "cent-",
+      "meaning": "百 (hundred)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "百年封印缓缓松动！",
+      "words": [
+        {
+          "word": "century",
+          "root": "ury",
+          "cn": "世纪；百年",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "centi-",
+      "meaning": "百分之一 (hundredth)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "百发百中！微型箭矢范围清场！",
+      "words": [
+        {
+          "word": "centimeter",
+          "root": "meter",
+          "cn": "厘米",
+          "difficulty": 1
+        },
+        {
+          "word": "centipede",
+          "root": "pede",
+          "cn": "蜈蚣",
+          "difficulty": 2
+        },
+        {
+          "word": "centigrade",
+          "root": "grade",
+          "cn": "摄氏度的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "kilo-",
+      "meaning": "千 (thousand)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "千钧之压！巨石从天而降！",
+      "words": [
+        {
+          "word": "kilogram",
+          "root": "gram",
+          "cn": "千克",
+          "difficulty": 1
+        },
+        {
+          "word": "kilometer",
+          "root": "meter",
+          "cn": "千米",
+          "difficulty": 1
+        },
+        {
+          "word": "kilowatt",
+          "root": "watt",
+          "cn": "千瓦",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "multi-",
+      "meaning": "多 (many)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "BOSS战：多元宇宙吞噬者无限增殖！",
+      "words": [
+        {
+          "word": "multiple",
+          "root": "ple",
+          "cn": "多个的；多样的",
+          "difficulty": 1
+        },
+        {
+          "word": "multiply",
+          "root": "ply",
+          "cn": "乘；成倍增加",
+          "difficulty": 1
+        },
+        {
+          "word": "multimedia",
+          "root": "media",
+          "cn": "多媒体",
+          "difficulty": 1
+        }
+      ]
+    }
+  ]
+}

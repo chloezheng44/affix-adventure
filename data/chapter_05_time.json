@@ -1,0 +1,155 @@
+{
+  "chapterId": "chap_time",
+  "levels": [
+    {
+      "prefix": "pre-",
+      "meaning": "在...之前 (before)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "先知模式！画出敌人的攻击轨迹！",
+      "words": [
+        {
+          "word": "preview",
+          "root": "view",
+          "cn": "预习；预告",
+          "difficulty": 1
+        },
+        {
+          "word": "predict",
+          "root": "dict",
+          "cn": "预测",
+          "difficulty": 1
+        },
+        {
+          "word": "prevent",
+          "root": "vent",
+          "cn": "阻止；预防",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "fore-",
+      "meaning": "预先/在前 (before)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "预见未来，提前打断施法！",
+      "words": [
+        {
+          "word": "foresee",
+          "root": "see",
+          "cn": "预见",
+          "difficulty": 2
+        },
+        {
+          "word": "forecast",
+          "root": "cast",
+          "cn": "预报；预测",
+          "difficulty": 2
+        },
+        {
+          "word": "forehead",
+          "root": "head",
+          "cn": "前额",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "post-",
+      "meaning": "在...之后 (after)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "将怪物的攻击推迟三回合！",
+      "words": [
+        {
+          "word": "postcard",
+          "root": "card",
+          "cn": "明信片",
+          "difficulty": 1
+        },
+        {
+          "word": "postpone",
+          "root": "pone",
+          "cn": "推迟",
+          "difficulty": 2
+        },
+        {
+          "word": "postwar",
+          "root": "war",
+          "cn": "战后的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "after-",
+      "meaning": "在...之后 (after)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "击杀后清除毒沼余波！",
+      "words": [
+        {
+          "word": "afternoon",
+          "root": "noon",
+          "cn": "下午",
+          "difficulty": 1
+        },
+        {
+          "word": "afterward",
+          "root": "ward",
+          "cn": "之后；后来",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "step-",
+      "meaning": "继/后 (step)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "母体死后衍生的次生怪现身！",
+      "words": [
+        {
+          "word": "stepfather",
+          "root": "father",
+          "cn": "继父",
+          "difficulty": 1
+        },
+        {
+          "word": "stepmother",
+          "root": "mother",
+          "cn": "继母",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "chrono-",
+      "meaning": "时间 (time)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "BOSS战：时空刻度者篡改倒计时！",
+      "words": [
+        {
+          "word": "chronology",
+          "root": "logy",
+          "cn": "年代记；大事记",
+          "difficulty": 3
+        },
+        {
+          "word": "chronological",
+          "root": "logical",
+          "cn": "按时间顺序的",
+          "difficulty": 3
+        }
+      ]
+    }
+  ]
+}

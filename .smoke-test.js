@@ -105,11 +105,14 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   G.initGameData(config, chapterMap);
   G.startGame();
   const CAT = G.Catalog.chapters;
-  assert(CAT.length === 3, "数据驱动: 从外部 JSON 装配 3 个章节");
+  assert(CAT.length === 6, "数据驱动: 从外部 JSON 装配 6 个章节");
   assert(CAT[0].levels.length === 12, "第一章(否定类) 12 个前缀关卡");
   assert(CAT[1].levels.length === 11, "第二章(空间类) 11 个前缀关卡");
-  assert(CAT[2].levels.length === 4, "第三章(数字类) 4 个前缀关卡");
-  assert(CAT.map(c => c.requirement).join(",") === "0,chap_neg,chap_spatial", "章节依次解锁链正确");
+  assert(CAT[2].levels.length === 16, "第三章(数量类) 16 个前缀关卡");
+  assert(CAT[3].levels.length === 8, "第四章(程度类) 8 个前缀关卡");
+  assert(CAT[4].levels.length === 6, "第五章(时间类) 6 个前缀关卡");
+  assert(CAT[5].levels.length === 7, "第六章(共同类) 7 个前缀关卡");
+  assert(CAT.map(c => c.requirement).join(",") === "0,chap_neg,chap_spatial,chap_quantity,chap_degree,chap_time", "章节依次解锁链正确 (6章首尾相接)");
 
   const allWords = [];
   CAT.forEach(c => c.levels.forEach(l => {
@@ -126,7 +129,7 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   // ---- 2. 导航 ----
   G.UI.goMap(); G.UI.goDict(); G.UI.goAchv(); G.UI.goWrong(); G.UI.goHome();
   assert(true, "界面导航无异常");
-  assert(els["home-foot"].innerHTML.includes("3"), "首页显示动态章节数");
+  assert(els["home-foot"].innerHTML.includes("6"), "首页显示动态章节数");
 
   // ---- 3. 同化规则机制 (im- 关卡 = 第一章第10关, index 9) ----
   G.Game.start(0, 9);
@@ -144,6 +147,22 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   await sleep(30);
   assert(G.Game.idx === 1, "答对后进入下一题");
   assert(G.SAVE.wrongWords.includes(missedIm), "本次闯关拼对不移出错题本 (保留至下次重玩)");
+
+  // ---- 3.5 第六章 con- 系同化组 (col- = 第六章第3关, index 2) ----
+  G.closeModal();
+  G.Game.start(5, 2);
+  assert(G.Game.lv.prefix === "col-", "进入 col- 关卡");
+  const optHTML6 = els["g-options"]._innerHTML;
+  const shown6 = [...optHTML6.matchAll(/>([a-z]+-)</g)].map(m => m[1]);
+  const group6 = ["co-", "con-", "col-", "cor-", "com-"];
+  assert(shown6.length === 4 && shown6.every(p => group6.includes(p)), "col- 关卡选项全部来自同化组 (co/con/col/cor/com)");
+  assert(els["g-speech"].innerHTML.includes("读音守卫"), "con- 系关卡显示同化规则提示");
+  G.Game.attempt("con-", null); // col- 关卡选 con- 是错的
+  assert(G.Game.hp === 2, "con- 系选错扣血");
+  assert(els["g-speech"].innerHTML.includes("💡"), "con- 系答错反馈同化教学");
+  G.Game.attempt("col-", null);
+  await sleep(30);
+  assert(G.Game.idx === 1, "col- 答对进入下一题");
 
   // ---- 4. 完整通关第二章第1关 (pro-): 1次失误 → 2星 ----
   G.Game.start(1, 0);
@@ -171,7 +190,7 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   assert(G.SAVE.achievements.includes("first"), "成就「初出茅庐」解锁");
   assert(!G.SAVE.achievements.includes("clear_chap_neg"), "章节通关成就未误发");
   assert(G.SAVE.wrongWords.includes(missedPro), "拼错过关的词保留在错题本 (bug修复)");
-  assert(G.SAVE.wrongWords.length === 2, "错题本共 2 词 (im-关 + pro-关各 1)");
+  assert(G.SAVE.wrongWords.length === 3, "错题本共 3 词 (im-关 + col-关 + pro-关各 1)");
 
   // ---- 4.5 重玩 im- 关卡 (全程首次拼对) → 错词移出错题本 ----
   G.closeModal();
@@ -189,13 +208,13 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
   assert(!G.SAVE.wrongWords.includes(missedIm), "重玩拼对 → 错词移出错题本");
   assert(G.SAVE.wrongWords.includes(missedPro), "其他关卡的错词不受影响");
 
-  // ---- 4.7 连线配错也记入错题本 (第三章 uni- 关) ----
+  // ---- 4.7 连线配错也记入错题本 (第三章 semi- 关) ----
   G.closeModal();
   G.Game.start(2, 0);
   const nU = CAT[2].levels[0].words.length;
   for (let i = 0; i < nU; i++) { G.Game.attempt(G.Game.lv.prefix, null); await sleep(30); }
   await sleep(50);
-  assert(G.Game.phase === "match", "uni- 关进入连线阶段");
+  assert(G.Game.phase === "match", "semi- 关进入连线阶段");
   const w0 = G.Game.learned[0];
   const w1 = G.Game.learned[1] || G.Game.learned[0];
   const a0 = makeEl(); a0.dataset.w = w0.word; a0.parentElement = makeEl("mc-left");
@@ -239,7 +258,8 @@ const sleep = ms => new Promise(r => setTimeout_real(r, ms));
 
   // ---- 8. 离线数据包校验 ----
   const bundle = fs.readFileSync(path.join(ROOT, "data/bundle.js"), "utf8");
-  assert(bundle.includes("chap_neg") && bundle.includes("chap_spatial") && bundle.includes("chap_number"), "bundle.js 含全部章节");
+  assert(bundle.includes("chap_neg") && bundle.includes("chap_spatial") && bundle.includes("chap_quantity")
+    && bundle.includes("chap_degree") && bundle.includes("chap_time") && bundle.includes("chap_joint"), "bundle.js 含全部 6 章");
   assert(!script.includes("antibody") && !script.includes("transport"), "引擎代码已与词库数据完全解耦");
 
   console.log(process.exitCode ? "\n== 有失败项 ==" : "\n== 全部冒烟测试通过 ==");

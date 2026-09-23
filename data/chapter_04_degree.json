@@ -1,0 +1,181 @@
+{
+  "chapterId": "chap_degree",
+  "levels": [
+    {
+      "prefix": "extra-",
+      "meaning": "额外/超出 (beyond)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "超常异种免疫普通攻击！",
+      "words": [
+        {
+          "word": "extraordinary",
+          "root": "ordinary",
+          "cn": "非凡的；特别的",
+          "difficulty": 2
+        },
+        {
+          "word": "extracurricular",
+          "root": "curricular",
+          "cn": "课外的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "super-",
+      "meaning": "超级/在上 (above)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "超能变身！体型瞬间放大！",
+      "words": [
+        {
+          "word": "supermarket",
+          "root": "market",
+          "cn": "超市",
+          "difficulty": 1
+        },
+        {
+          "word": "superstar",
+          "root": "star",
+          "cn": "超级明星",
+          "difficulty": 1
+        },
+        {
+          "word": "superman",
+          "root": "man",
+          "cn": "超人",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "ultra-",
+      "meaning": "极端/超 (extreme)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "极限突破！属性提升到极致！",
+      "words": [
+        {
+          "word": "ultraviolet",
+          "root": "violet",
+          "cn": "紫外线的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "mini-",
+      "meaning": "迷你 (small)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "把巨型敌人缩小成迷你版！",
+      "words": [
+        {
+          "word": "minibus",
+          "root": "bus",
+          "cn": "小型公共汽车",
+          "difficulty": 1
+        },
+        {
+          "word": "minicomputer",
+          "root": "computer",
+          "cn": "微型计算机",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "micro-",
+      "meaning": "微观 (small)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "只有显微镜才能看清细菌怪！",
+      "words": [
+        {
+          "word": "microscope",
+          "root": "scope",
+          "cn": "显微镜",
+          "difficulty": 1
+        },
+        {
+          "word": "microphone",
+          "root": "phone",
+          "cn": "麦克风",
+          "difficulty": 1
+        },
+        {
+          "word": "microwave",
+          "root": "wave",
+          "cn": "微波",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "macro-",
+      "meaning": "宏观 (large)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "宏观房间被经济学巨石压制！",
+      "words": [
+        {
+          "word": "macroeconomics",
+          "root": "economics",
+          "cn": "宏观经济学",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "prefix": "per-",
+      "meaning": "贯穿/完全 (through)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "透视眼贯穿一切潜行！",
+      "words": [
+        {
+          "word": "percent",
+          "root": "cent",
+          "cn": "百分之…",
+          "difficulty": 1
+        },
+        {
+          "word": "perfect",
+          "root": "fect",
+          "cn": "完美的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "vice-",
+      "meaning": "副的/替代 (deputy)",
+      "school": null,
+      "rule": null,
+      "assimilationGroup": null,
+      "scene": "BOSS战：虚伪的副王躲在替身背后！",
+      "words": [
+        {
+          "word": "vice-president",
+          "root": "president",
+          "cn": "副总统；副校长",
+          "difficulty": 2
+        },
+        {
+          "word": "vice-chairman",
+          "root": "chairman",
+          "cn": "副主席",
+          "difficulty": 2
+        }
+      ]
+    }
+  ]
+}

@@ -72,12 +72,90 @@ chap_spatial,地下城与天空塔,spatial,空间位置类,在地下城与天空
 chap_spatial,地下城与天空塔,spatial,空间位置类,在地下城与天空塔之间穿梭！掌握11个空间位置前缀的魔力,🗺️,空间大师,ex-,向外/出去 (out),,,,寻找发光的出口！,port,export,出口；输出,1
 chap_spatial,地下城与天空塔,spatial,空间位置类,在地下城与天空塔之间穿梭！掌握11个空间位置前缀的魔力,🗺️,空间大师,ex-,向外/出去 (out),,,,寻找发光的出口！,press,express,表达,1
 chap_spatial,地下城与天空塔,spatial,空间位置类,在地下城与天空塔之间穿梭！掌握11个空间位置前缀的魔力,🗺️,空间大师,ex-,向外/出去 (out),,,,寻找发光的出口！,plore,explore,探索,2
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,uni-,一 (one),,,,独眼守卫只放行「一」的单词！,form,uniform,制服；统一的,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,uni-,一 (one),,,,独眼守卫只放行「一」的单词！,it,unit,单元；单位,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,uni-,一 (one),,,,独眼守卫只放行「一」的单词！,corn,unicorn,独角兽,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,bi-,二 (two),,,,双头怪正在路口徘徊！,cycle,bicycle,自行车,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,bi-,二 (two),,,,双头怪正在路口徘徊！,lingual,bilingual,双语的,2
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,tri-,三 (three),,,,三叉路口的石门密题！,angle,triangle,三角形,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,tri-,三 (three),,,,三叉路口的石门密题！,ple,triple,三倍的,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,multi-,多 (many),,,,千面魔王的分身考验！,ple,multiple,多个的；多样的,1
-chap_number,数字王国,number,数字类,在数字王国你会遇到只认数字的奇怪生物！,🔢,数字先锋,multi-,多 (many),,,,千面魔王的分身考验！,ply,multiply,乘；成倍增加,1
+chap_quantity,数理迷宫,quantity,数量类,齿轮与几何构成的机械迷宫！这里的机关和怪物都受数量法则控制！,🧮,数量掌控者,semi-,半 (half),,,,裁决之刃！将敌方护甲直接削减一半！,circle,semicircle,半圆,1
+,,,,,,,,,,,,,final,semifinal,半决赛,1
+,,,,,,,demi-,半/次等 (half),,,,半神首领守卫着破碎之镜！,god,demigod,半神,2
+,,,,,,,hemi-,半 (half),,,,半球护盾折射着迷宫的激光！,sphere,hemisphere,半球,2
+,,,,,,,uni-,一 (one),,,,独眼守卫只放行「一」的单词！,form,uniform,制服；统一的,1
+,,,,,,,,,,,,,it,unit,单元；单位,1
+,,,,,,,,,,,,,corn,unicorn,独角兽,1
+,,,,,,,mono-,单一 (single),,,,静默领域！巨头怪吞噬周围的一切！,logue,monologue,独白,2
+,,,,,,,,,,,,,poly,monopoly,垄断,2
+,,,,,,,,,,,,,rail,monorail,单轨铁路,2
+,,,,,,,bi-,二 (two),,,,双头怪正在路口徘徊！,cycle,bicycle,自行车,1
+,,,,,,,,,,,,,lingual,bilingual,双语的,2
+,,,,,,,di-,二/双 (two),,,,双生毒物必须同时击杀！,oxide,dioxide,二氧化物,2
+,,,,,,,,,,,,,ploma,diploma,文凭,2
+,,,,,,,tri-,三 (three),,,,三角阵法封锁了石门！,angle,triangle,三角形,1
+,,,,,,,,,,,,,cycle,tricycle,三轮车,1
+,,,,,,,,,,,,,ple,triple,三倍的,1
+,,,,,,,quadr-,四 (four),,,,四方结界封锁战场四角！,angle,quadrangle,四边形,2
+,,,,,,,,,,,,,ped,quadruped,四足动物,2
+,,,,,,,penta-,五 (five),,,,五星连珠！元素法阵启动！,gon,pentagon,五边形；五角大楼,2
+,,,,,,,,,,,,,thlon,pentathlon,五项全能,2
+,,,,,,,deca-,十 (ten),,,,十倍杠杆撬动巨石机关！,de,decade,十年,1
+,,,,,,,,,,,,,thlon,decathlon,十项全能,2
+,,,,,,,deci-,十分之一 (tenth),,,,微缩光线将敌人缩至十分之一！,meter,decimeter,分米,1
+,,,,,,,,,,,,,mal,decimal,小数,1
+,,,,,,,cent-,百 (hundred),,,,百年封印缓缓松动！,ury,century,世纪；百年,1
+,,,,,,,centi-,百分之一 (hundredth),,,,百发百中！微型箭矢范围清场！,meter,centimeter,厘米,1
+,,,,,,,,,,,,,pede,centipede,蜈蚣,2
+,,,,,,,,,,,,,grade,centigrade,摄氏度的,2
+,,,,,,,kilo-,千 (thousand),,,,千钧之压！巨石从天而降！,gram,kilogram,千克,1
+,,,,,,,,,,,,,meter,kilometer,千米,1
+,,,,,,,,,,,,,watt,kilowatt,千瓦,2
+,,,,,,,multi-,多 (many),,,,BOSS战：多元宇宙吞噬者无限增殖！,ple,multiple,多个的；多样的,1
+,,,,,,,,,,,,,ply,multiply,乘；成倍增加,1
+,,,,,,,,,,,,,media,multimedia,多媒体,1
+chap_degree,极限维度高塔,degree,程度类,打破物理法则的试炼之塔！放大缩小超越下潜，掌控程度与极性,🗼,极限征服者,extra-,额外/超出 (beyond),,,,超常异种免疫普通攻击！,ordinary,extraordinary,非凡的；特别的,2
+,,,,,,,,,,,,,curricular,extracurricular,课外的,2
+,,,,,,,super-,超级/在上 (above),,,,超能变身！体型瞬间放大！,market,supermarket,超市,1
+,,,,,,,,,,,,,star,superstar,超级明星,1
+,,,,,,,,,,,,,man,superman,超人,1
+,,,,,,,ultra-,极端/超 (extreme),,,,极限突破！属性提升到极致！,violet,ultraviolet,紫外线的,2
+,,,,,,,mini-,迷你 (small),,,,把巨型敌人缩小成迷你版！,bus,minibus,小型公共汽车,1
+,,,,,,,,,,,,,computer,minicomputer,微型计算机,2
+,,,,,,,micro-,微观 (small),,,,只有显微镜才能看清细菌怪！,scope,microscope,显微镜,1
+,,,,,,,,,,,,,phone,microphone,麦克风,1
+,,,,,,,,,,,,,wave,microwave,微波,1
+,,,,,,,macro-,宏观 (large),,,,宏观房间被经济学巨石压制！,economics,macroeconomics,宏观经济学,3
+,,,,,,,per-,贯穿/完全 (through),,,,透视眼贯穿一切潜行！,cent,percent,百分之…,1
+,,,,,,,,,,,,,fect,perfect,完美的,1
+,,,,,,,vice-,副的/替代 (deputy),,,,BOSS战：虚伪的副王躲在替身背后！,president,vice-president,副总统；副校长,2
+,,,,,,,,,,,,,chairman,vice-chairman,副主席,2
+chap_time,时光神殿,time,时间类,崩塌重组的古代神殿！时间之河扭曲了过去现在与未来,⏳,时空旅人,pre-,在...之前 (before),,,,先知模式！画出敌人的攻击轨迹！,view,preview,预习；预告,1
+,,,,,,,,,,,,,dict,predict,预测,1
+,,,,,,,,,,,,,vent,prevent,阻止；预防,1
+,,,,,,,fore-,预先/在前 (before),,,,预见未来，提前打断施法！,see,foresee,预见,2
+,,,,,,,,,,,,,cast,forecast,预报；预测,2
+,,,,,,,,,,,,,head,forehead,前额,1
+,,,,,,,post-,在...之后 (after),,,,将怪物的攻击推迟三回合！,card,postcard,明信片,1
+,,,,,,,,,,,,,pone,postpone,推迟,2
+,,,,,,,,,,,,,war,postwar,战后的,2
+,,,,,,,after-,在...之后 (after),,,,击杀后清除毒沼余波！,noon,afternoon,下午,1
+,,,,,,,,,,,,,ward,afterward,之后；后来,2
+,,,,,,,step-,继/后 (step),,,,母体死后衍生的次生怪现身！,father,stepfather,继父,1
+,,,,,,,,,,,,,mother,stepmother,继母,1
+,,,,,,,chrono-,时间 (time),,,,BOSS战：时空刻度者篡改倒计时！,logy,chronology,年代记；大事记,3
+,,,,,,,,,,,,,logical,chronological,按时间顺序的,3
+chap_joint,共生矿脉,joint,共同类,晶体构成的地下网络！所有怪物与机关互相连接，牵一发而动全身,🔗,矩阵主宰,co-,共同 (together),,词根以元音或w开头时con-缩为co-,co-|con-|col-|cor-|com-,锁链连结敌人实现伤害共享！,exist,coexist,共存,2
+,,,,,,,,,,,,,operate,cooperate,合作,1
+,,,,,,,,,,,,,worker,coworker,同事,1
+,,,,,,,con-,共同 (together),,词根开头不是l/r/p/b/m时用con-,co-|con-|col-|cor-|com-,单打独斗会非常吃力！,nect,connect,连接,1
+,,,,,,,,,,,,,test,contest,竞赛,1
+,,,,,,,,,,,,,cert,concert,音乐会,1
+,,,,,,,col-,共同 (together),,词根以l开头时con-同化为col-,co-|con-|col-|cor-|com-,字母护卫只认l开头的组合！,lect,collect,收集,1
+,,,,,,,,,,,,,lapse,collapse,倒塌,1
+,,,,,,,,,,,,,league,colleague,同事；同伴,2
+,,,,,,,cor-,共同 (together),,词根以r开头时con-同化为cor-,co-|con-|col-|cor-|com-,字母护卫只认r开头的组合！,rect,correct,正确的,1
+,,,,,,,,,,,,,respond,correspond,符合；通信,2
+,,,,,,,,,,,,,relate,correlate,相关的,2
+,,,,,,,com-,共同 (together),,词根以b/p/m开头时con-同化为com-,co-|con-|col-|cor-|com-,字母护卫只认b/p/m开头的组合！,pare,compare,比较,1
+,,,,,,,,,,,,,pete,compete,竞争,1
+,,,,,,,,,,,,,municate,communicate,交流,1
+,,,,,,,,,,,,,mon,common,普通的；共同的,1
+,,,,,,,sym-,共同/相同 (together),,词根以p/b/m开头时syn-同化为sym-,sym-|syn-,交响乐女妖必须同时击杀！,pathy,sympathy,同情,2
+,,,,,,,,,,,,,bol,symbol,符号,1
+,,,,,,,,,,,,,phony,symphony,交响乐,2
+,,,,,,,syn-,共同/相同 (together),,词根以元音开头时用syn-,sym-|syn-,同步攻击频率达成全屏秒杀！,onym,synonym,同义词,2
+,,,,,,,,,,,,,chronize,synchronize,同步,3

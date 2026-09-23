@@ -1,7 +1,7 @@
 {
   "version": 2,
   "generatedFrom": "data/wordbank.csv",
-  "generatedAt": "2026-09-22T04:56:32.790Z",
+  "generatedAt": "2026-09-23T14:35:23.252Z",
   "chapters": [
     {
       "id": "chap_neg",
@@ -30,16 +30,55 @@
       }
     },
     {
-      "id": "chap_number",
-      "title": "数字王国",
-      "theme": "number",
-      "themeName": "数字类",
-      "story": "在数字王国你会遇到只认数字的奇怪生物！",
-      "dataFile": "data/chapter_03_number.json",
+      "id": "chap_quantity",
+      "title": "数理迷宫",
+      "theme": "quantity",
+      "themeName": "数量类",
+      "story": "齿轮与几何构成的机械迷宫！这里的机关和怪物都受数量法则控制！",
+      "dataFile": "data/chapter_03_quantity.json",
       "unlockRequirement": "chap_spatial",
       "clearAchievement": {
-        "ico": "🔢",
-        "title": "数字先锋"
+        "ico": "🧮",
+        "title": "数量掌控者"
+      }
+    },
+    {
+      "id": "chap_degree",
+      "title": "极限维度高塔",
+      "theme": "degree",
+      "themeName": "程度类",
+      "story": "打破物理法则的试炼之塔！放大缩小超越下潜，掌控程度与极性",
+      "dataFile": "data/chapter_04_degree.json",
+      "unlockRequirement": "chap_quantity",
+      "clearAchievement": {
+        "ico": "🗼",
+        "title": "极限征服者"
+      }
+    },
+    {
+      "id": "chap_time",
+      "title": "时光神殿",
+      "theme": "time",
+      "themeName": "时间类",
+      "story": "崩塌重组的古代神殿！时间之河扭曲了过去现在与未来",
+      "dataFile": "data/chapter_05_time.json",
+      "unlockRequirement": "chap_degree",
+      "clearAchievement": {
+        "ico": "⏳",
+        "title": "时空旅人"
+      }
+    },
+    {
+      "id": "chap_joint",
+      "title": "共生矿脉",
+      "theme": "joint",
+      "themeName": "共同类",
+      "story": "晶体构成的地下网络！所有怪物与机关互相连接，牵一发而动全身",
+      "dataFile": "data/chapter_06_joint.json",
+      "unlockRequirement": "chap_time",
+      "clearAchievement": {
+        "ico": "🔗",
+        "title": "矩阵主宰"
       }
     }
   ]

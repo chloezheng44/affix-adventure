@@ -1,0 +1,237 @@
+{
+  "chapterId": "chap_joint",
+  "levels": [
+    {
+      "prefix": "co-",
+      "meaning": "共同 (together)",
+      "school": null,
+      "rule": "词根以元音或w开头时con-缩为co-",
+      "assimilationGroup": [
+        "co-",
+        "con-",
+        "col-",
+        "cor-",
+        "com-"
+      ],
+      "scene": "锁链连结敌人实现伤害共享！",
+      "words": [
+        {
+          "word": "coexist",
+          "root": "exist",
+          "cn": "共存",
+          "difficulty": 2
+        },
+        {
+          "word": "cooperate",
+          "root": "operate",
+          "cn": "合作",
+          "difficulty": 1
+        },
+        {
+          "word": "coworker",
+          "root": "worker",
+          "cn": "同事",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "con-",
+      "meaning": "共同 (together)",
+      "school": null,
+      "rule": "词根开头不是l/r/p/b/m时用con-",
+      "assimilationGroup": [
+        "co-",
+        "con-",
+        "col-",
+        "cor-",
+        "com-"
+      ],
+      "scene": "单打独斗会非常吃力！",
+      "words": [
+        {
+          "word": "connect",
+          "root": "nect",
+          "cn": "连接",
+          "difficulty": 1
+        },
+        {
+          "word": "contest",
+          "root": "test",
+          "cn": "竞赛",
+          "difficulty": 1
+        },
+        {
+          "word": "concert",
+          "root": "cert",
+          "cn": "音乐会",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "col-",
+      "meaning": "共同 (together)",
+      "school": null,
+      "rule": "词根以l开头时con-同化为col-",
+      "assimilationGroup": [
+        "co-",
+        "con-",
+        "col-",
+        "cor-",
+        "com-"
+      ],
+      "scene": "字母护卫只认l开头的组合！",
+      "words": [
+        {
+          "word": "collect",
+          "root": "lect",
+          "cn": "收集",
+          "difficulty": 1
+        },
+        {
+          "word": "collapse",
+          "root": "lapse",
+          "cn": "倒塌",
+          "difficulty": 1
+        },
+        {
+          "word": "colleague",
+          "root": "league",
+          "cn": "同事；同伴",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "cor-",
+      "meaning": "共同 (together)",
+      "school": null,
+      "rule": "词根以r开头时con-同化为cor-",
+      "assimilationGroup": [
+        "co-",
+        "con-",
+        "col-",
+        "cor-",
+        "com-"
+      ],
+      "scene": "字母护卫只认r开头的组合！",
+      "words": [
+        {
+          "word": "correct",
+          "root": "rect",
+          "cn": "正确的",
+          "difficulty": 1
+        },
+        {
+          "word": "correspond",
+          "root": "respond",
+          "cn": "符合；通信",
+          "difficulty": 2
+        },
+        {
+          "word": "correlate",
+          "root": "relate",
+          "cn": "相关的",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "com-",
+      "meaning": "共同 (together)",
+      "school": null,
+      "rule": "词根以b/p/m开头时con-同化为com-",
+      "assimilationGroup": [
+        "co-",
+        "con-",
+        "col-",
+        "cor-",
+        "com-"
+      ],
+      "scene": "字母护卫只认b/p/m开头的组合！",
+      "words": [
+        {
+          "word": "compare",
+          "root": "pare",
+          "cn": "比较",
+          "difficulty": 1
+        },
+        {
+          "word": "compete",
+          "root": "pete",
+          "cn": "竞争",
+          "difficulty": 1
+        },
+        {
+          "word": "communicate",
+          "root": "municate",
+          "cn": "交流",
+          "difficulty": 1
+        },
+        {
+          "word": "common",
+          "root": "mon",
+          "cn": "普通的；共同的",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "prefix": "sym-",
+      "meaning": "共同/相同 (together)",
+      "school": null,
+      "rule": "词根以p/b/m开头时syn-同化为sym-",
+      "assimilationGroup": [
+        "sym-",
+        "syn-"
+      ],
+      "scene": "交响乐女妖必须同时击杀！",
+      "words": [
+        {
+          "word": "sympathy",
+          "root": "pathy",
+          "cn": "同情",
+          "difficulty": 2
+        },
+        {
+          "word": "symbol",
+          "root": "bol",
+          "cn": "符号",
+          "difficulty": 1
+        },
+        {
+          "word": "symphony",
+          "root": "phony",
+          "cn": "交响乐",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "prefix": "syn-",
+      "meaning": "共同/相同 (together)",
+      "school": null,
+      "rule": "词根以元音开头时用syn-",
+      "assimilationGroup": [
+        "sym-",
+        "syn-"
+      ],
+      "scene": "同步攻击频率达成全屏秒杀！",
+      "words": [
+        {
+          "word": "synonym",
+          "root": "onym",
+          "cn": "同义词",
+          "difficulty": 2
+        },
+        {
+          "word": "synchronize",
+          "root": "chronize",
+          "cn": "同步",
+          "difficulty": 3
+        }
+      ]
+    }
+  ]
+}
